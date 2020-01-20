@@ -83,19 +83,38 @@ class Utility extends CI_Controller {
 	{
 		$this->cek_login();
 		$id = $this->input->post('id');
+		$direct = $this->input->post('direct', TRUE);
+		$cekwa = substr($direct, 0,2);
 		if ($this->input->post('submit', TRUE) == 'Submit')  {
 			$this->form_validation->set_rules('id', 'ID', 'required');
 			$this->form_validation->set_rules('direct', 'Direct', 'required');
 			if ($this->form_validation->run() == TRUE)
 			{
-				$data = array(
-					'direct'  => $this->input->post('direct', TRUE),
-					'pesan'  => $this->input->post('pesan', TRUE)
-				);
-                $this->admin->update('tbl_kontak', $data, array('id' => $id));
+				if ($id == "1"){
+					if($cekwa == "62") {
+						$data = array(
+							'direct'  => $direct,
+							'pesan'  => $this->input->post('pesan', TRUE)
+						);
+						$this->admin->update('tbl_kontak', $data, array('id' => $id));
+	
+						$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
+						redirect('utility/kontak');
+					} else {
+						$this->session->set_flashdata('warning', '<i class="icon fa fa-frown-o"></i>  Nomor WhatsApp harus menggunakan <b>62</b>');
+						redirect('utility/kontak');
+					}
+				} else {
+					
+					$data = array(
+						'direct'  => $direct,
+						'pesan'  => $this->input->post('pesan', TRUE)
+					);
+					$this->admin->update('tbl_kontak', $data, array('id' => $id));
 
-                $this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
-                redirect('utility/kontak');
+					$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
+					redirect('utility/kontak');
+				}
 			} else {
                 $this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Data Gagal Disimpan');
 				redirect('utility/kontak');

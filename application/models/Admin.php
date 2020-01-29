@@ -112,7 +112,7 @@ class Admin extends CI_Model {
     
     public function importData($data) {
 
-        $qwery = $this->db->insert_batch('tbl_kendaraan_tes',$data);
+        $qwery = $this->db->insert_batch('tbl_kendaraan',$data);
         if ($qwery){
             return TRUE;
         } else {

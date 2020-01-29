@@ -106,12 +106,33 @@
 
     // Show Password
     $('.form-checkbox').click(function(){
-          if($(this).is(':checked')){
-            $('.password').attr('type','text');
-          }else{
-            $('.password').attr('type','password');
+      if($(this).is(':checked')){
+        $('.password').attr('type','text');
+      }else{
+        $('.password').attr('type','password');
+      }
+    });
+    $(document).ready(function() {
+      $('#id_cabang').change(function(){ 
+      var id_cabang=$(this).val();
+      $.ajax({
+        url : "<?php echo site_url('data/get_leasing');?>",
+        method : "POST",
+        data : {id_cabang: id_cabang},
+        async : true,
+        dataType : 'json',
+        success: function(data){
+          var html = '';
+          var i;
+          for(i=0; i<data.length; i++){
+            html += '<option value='+data[i].id_leasing+'>'+data[i].leasing+'</option>';
           }
-        });
+          $('#id_leasing').html(html);
+        }
+      });
+      });
+      return false;
+    });
     </script>
 	
   </body>

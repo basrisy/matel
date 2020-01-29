@@ -1,6 +1,9 @@
 <div class="x_panel">
     <div class="x_title">
         <h2>DAFTAR LEASING</h2>
+            <div style="float:right">
+            <a data-toggle="modal" data-target="#tambah" class="btn btn-xs btn-primary" title="Tambah Cabang"><i class="fa fa-plus"></i> Leasing</a>
+            </div>
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
@@ -49,6 +52,39 @@
     </div>
 </div>
 
+<div id="tambah" class="modal fade" data-backdrop="false" data-keyboard="false">
+    <div class="modal-dialog"  role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Edit Leasing</h4>
+            <div class="clearfix"></div>
+        </div>
+        <form class="form-horizontal" action="<?php echo base_url('data/tambah_leasing')?>" method="post" enctype="multipart/form-data" role="form">
+            <div class="modal-body">
+                <div class="form-group">
+                    Cabang
+                    <select id="id_cabang" name="id_cabang" class="form-control required" required/>
+                        <option value="" selected>-- Pilih Cabang --</option>
+                        <?php foreach($cabang->result() as $row):?>
+                        <option value="<?php echo $row->id_cabang;?>"><?php echo $row->cabang;?></option>
+                        <?php endforeach;?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    Nama Leasing
+                    <input type="text" name="leasing" value="" style="text-transform:uppercase"  onkeyup="this.value = this.value.toUpperCase()" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" name="submit" value="Submit" type="submit"><i class="fa fa-save"></i> Simpan</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-history"></i> Batal</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
 
 <!-- Modal Edit-->
 <?php foreach($leasing->result() AS $key): ?>
@@ -63,23 +99,19 @@
         <form class="form-horizontal" action="<?php echo base_url('data/edit_leasing')?>" method="post" enctype="multipart/form-data" role="form">
             <div class="modal-body">
                 <div class="form-group">
-                    Nama Cabang
+                    Cabang
+                    <input type="hidden" name="id_cabang" value="<?= $key->id_cabang; ?>">
+                    <input type="text" name="cabang" value="<?php foreach($cabang->result() as $k){ if($key->id_cabang == $k->id_cabang){ echo $k->cabang; }}?>" style="text-transform:uppercase"  onkeyup="this.value = this.value.toUpperCase()" class="form-control" readonly/>
+                </div>
+                <div class="form-group">
+                    Nama Leasing
                     <input type="hidden" name="id" value="<?= $key->id_leasing; ?>">
                     <input type="text" name="leasing" value="<?= $key->leasing; ?>" style="text-transform:uppercase"  onkeyup="this.value = this.value.toUpperCase()" class="form-control">
                 </div>
-                <div class="form-group">
-                    Cabang
-                    <select id="id_cabang" name="id_cabang" class="form-control required" required/>
-                        <option value="<?= $key->id_cabang; ?>" selected><?php foreach($cabang->result() as $k){ if($key->id_cabang == $k->id_cabang){ echo $k->cabang; }}?></option>
-                        <?php foreach($cabang->result() as $row):?>
-                        <option value="<?php echo $row->id_cabang;?>"><?php echo $row->cabang;?></option>
-                        <?php endforeach;?>
-                    </select>
-                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-info" name="submit" value="Submit" type="submit"> Simpan&nbsp;</button>
-                <button type="button" class="btn btn-warning" data-dismiss="modal"> Batal</button>
+                <button class="btn btn-sm btn-success" name="submit" value="Submit" type="submit"><i class="fa fa-save"></i> Simpan</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-history"></i> Batal</button>
             </div>
         </form>
         </div>

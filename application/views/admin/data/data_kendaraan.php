@@ -2,7 +2,7 @@
     <div class="x_title">
         <h2>DATA KENDARAAN</h2>
         <div style="float:right">
-            <a href="<?=base_url();?>data/import" class="btn btn-success" title="Import Data"><i class="glyphicon glyphicon-import"></i> Import File</a>
+            <a href="<?=base_url();?>data/import_file" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i> Import File</a>
         </div>
         <div class="clearfix"></div>
     </div>

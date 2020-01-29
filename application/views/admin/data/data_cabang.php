@@ -1,6 +1,9 @@
 <div class="x_panel">
     <div class="x_title">
         <h2>DATA CABANG</h2>
+            <div style="float:right">
+            <a data-toggle="modal" data-target="#tambah" class="btn btn-xs btn-primary" title="Tambah Cabang"><i class="fa fa-plus"></i> Cabang</a>
+            </div>
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
@@ -49,6 +52,30 @@
     </div>
 </div>
 
+<div id="tambah" class="modal fade" data-backdrop="false" data-keyboard="false">
+    <div class="modal-dialog"  role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Tambah Cabang</h4>
+            <div class="clearfix"></div>
+        </div>
+        <form class="form-horizontal" action="<?php echo base_url('data/tambah_cabang')?>" method="post" enctype="multipart/form-data" role="form">
+            <div class="modal-body">
+                <div class="form-group">
+                    Nama Cabang
+                    <input type="text" name="cabang" style="text-transform:uppercase"  onkeyup="this.value = this.value.toUpperCase()" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" name="submit" value="Submit" type="submit"><i class="fa fa-save"></i> Simpan</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-history"></i> Batal</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
 <!-- Modal Edit-->
 <?php foreach($cabang->result() AS $key): ?>
 <div id="edit<?=$key->id_cabang;?>" class="modal fade" data-backdrop="false" data-keyboard="false">
@@ -61,15 +88,15 @@
         </div>
         <form class="form-horizontal" action="<?php echo base_url('data/edit_cabang')?>" method="post" enctype="multipart/form-data" role="form">
             <div class="modal-body">
-            <div class="form-group">
-                Nama Cabang
-                <input type="hidden" name="id" value="<?= $key->id_cabang; ?>">
-                <input type="text" name="cabang" value="<?= $key->cabang; ?>" style="text-transform:uppercase"  onkeyup="this.value = this.value.toUpperCase()" class="form-control">
-            </div>
+                <div class="form-group">
+                    Nama Cabang
+                    <input type="hidden" name="id" value="<?= $key->id_cabang; ?>">
+                    <input type="text" name="cabang" value="<?= $key->cabang; ?>" style="text-transform:uppercase"  onkeyup="this.value = this.value.toUpperCase()" class="form-control">
+                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-info" name="submit" value="Submit" type="submit"> Simpan&nbsp;</button>
-                <button type="button" class="btn btn-warning" data-dismiss="modal"> Batal</button>
+                <button class="btn btn-sm btn-success" name="submit" value="Submit" type="submit"><i class="fa fa-save"></i> Simpan</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-history"></i> Batal</button>
             </div>
         </form>
         </div>

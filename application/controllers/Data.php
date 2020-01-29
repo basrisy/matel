@@ -30,6 +30,31 @@ class Data extends CI_Controller {
 		$data['cabang'] = $this->admin->get_all('tbl_cabang');
 		$this->template->admin('admin/data/data_cabang', $data);
 	}
+    public function tambah_cabang()
+    {
+		$this->cek_login();
+        $cabang = $this->input->post('cabang', TRUE);
+        if ($this->input->post('submit', TRUE) == 'Submit')  {
+            $this->form_validation->set_rules('cabang', 'Cabang', 'required|min_length[2]');
+            if ($this->form_validation->run() == TRUE){
+                $cek = $this->admin->get_where('tbl_cabang', array('cabang' => $cabang));
+                if ($cek->num_rows() <= 0) {
+                    $data = array(
+                        'cabang' => $cabang,
+                    );
+                    $this->admin->insert('tbl_cabang', $data);
+                    $this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
+                    redirect('data/data_cabang');
+                } else {
+                    $this->session->set_flashdata('warning', '<i class="icon fa fa-smile-o"></i>  Cabang Sudah Dipakai...');
+                    redirect('data/data_cabang');
+                }
+            } else {
+                $this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Data Gagal Disimpan');
+				redirect('data/data_cabang');
+            }	
+        }
+	}	
     public function edit_cabang()
     {
 		$this->cek_login();
@@ -80,6 +105,34 @@ class Data extends CI_Controller {
 		$data['cabang'] = $this->admin->get_all('tbl_cabang');
 		$this->template->admin('admin/data/data_leasing', $data);
 	}
+    public function tambah_leasing()
+    {
+		$this->cek_login();
+        $id_cabang = $this->input->post('id_cabang', TRUE);
+        $leasing = $this->input->post('leasing', TRUE);
+        if ($this->input->post('submit', TRUE) == 'Submit')  {
+            $this->form_validation->set_rules('leasing', 'Leasing', 'required');
+            $this->form_validation->set_rules('id_cabang', 'Cabang', 'required');
+            if ($this->form_validation->run() == TRUE){
+				$cek1 = $this->admin->get_where('tbl_leasing', array('id_cabang' => $id_cabang, 'leasing' => $leasing));
+                if ($cek1->num_rows() <= 0 ) {
+					$data = array(
+						'leasing' => $leasing,
+						'id_cabang' => $id_cabang
+					);
+					$this->admin->insert('tbl_leasing', $data);
+					$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
+					redirect('data/data_leasing');
+				} else {
+					$this->session->set_flashdata('warning', '<i class="icon fa fa-smile-o"></i>  Leasing Sudah Dipakai...');
+					redirect('data/data_leasing');
+				}
+            } else {
+                $this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Data Gagal Disimpan');
+				redirect('data/data_leasing');
+            }	
+        }
+	}	
     public function edit_leasing()
     {
 		$this->cek_login();
@@ -87,17 +140,22 @@ class Data extends CI_Controller {
         $id_cabang = $this->input->post('id_cabang', TRUE);
         $leasing = $this->input->post('leasing', TRUE);
         if ($this->input->post('submit', TRUE) == 'Submit')  {
-            //Validasi
             $this->form_validation->set_rules('leasing', 'Leasing', 'required');
             $this->form_validation->set_rules('id_cabang', 'Cabang', 'required');
             if ($this->form_validation->run() == TRUE){
-				$data = array(
-					'leasing' => $leasing,
-					'id_cabang' => $id_cabang
-				);
-				$this->admin->update('tbl_leasing', $data, array('id_leasing' => $id));
-				$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
-				redirect('data/data_leasing');
+				$cek1 = $this->admin->get_where('tbl_leasing', array('id_cabang' => $id_cabang, 'leasing' => $leasing));
+                if ($cek1->num_rows() <= 0 ) {
+					$data = array(
+						'leasing' => $leasing,
+						'id_cabang' => $id_cabang
+					);
+					$this->admin->update('tbl_leasing', $data, array('id_leasing' => $id));
+					$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
+					redirect('data/data_leasing');
+				} else {
+					$this->session->set_flashdata('warning', '<i class="icon fa fa-smile-o"></i>  Leasing Sudah Dipakai...');
+					redirect('data/data_leasing');
+				}
             } else {
                 $this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Data Gagal Disimpan');
 				redirect('data/data_leasing');
@@ -159,80 +217,169 @@ class Data extends CI_Controller {
 	public function import()
     {
 		$this->cek_login();
-		$this->template->admin('admin/data/import');
+
+		if ($this->input->post('submit', TRUE) == 'Submit'){			
+			$this->form_validation->set_rules('id_cabang', 'Cabang', 'required');
+			$this->form_validation->set_rules('id_leasing', 'Leasing', 'required');
+			if ($this->form_validation->run() == TRUE)
+			{
+				$this->session->set_userdata('id_cabang', $this->input->post('id_cabang', TRUE));
+				$this->session->set_userdata('id_leasing', $this->input->post('id_leasing', TRUE));
+				
+				$cabang  = $this->admin->get_where('tbl_cabang', array('id_cabang' => $this->input->post('id_cabang', TRUE)))->row();
+				$leasing  = $this->admin->get_where('tbl_leasing', array('id_leasing' => $this->input->post('id_leasing', TRUE)))->row();
+				$this->session->set_userdata(array('cabang' => $cabang->cabang));
+				$this->session->set_userdata(array('leasing' => $leasing->leasing));
+				redirect('data/import');
+			}
+		}
+		$data['leasing'] = $this->admin->get_all('tbl_leasing');
+		$data['cabang'] = $this->admin->get_all('tbl_cabang');
+		$this->template->admin('admin/data/import', $data);
 	}
-	public function importFile()
+	public function import_file()
     {
 		$this->cek_login();
-		if ($this->input->post('submit')) {
+		if ($this->input->post('submit', TRUE) == 'Submit'){			
+			$this->form_validation->set_rules('id_cabang', 'Cabang', 'required');
+			$this->form_validation->set_rules('id_leasing', 'Leasing', 'required');
+			if ($this->form_validation->run() == TRUE)
+			{
+				$this->session->set_userdata('id_cabang', $this->input->post('id_cabang', TRUE));
+				$this->session->set_userdata('id_leasing', $this->input->post('id_leasing', TRUE));
+				
+				$cabang  = $this->admin->get_where('tbl_cabang', array('id_cabang' => $this->input->post('id_cabang', TRUE)))->row();
+				$leasing  = $this->admin->get_where('tbl_leasing', array('id_leasing' => $this->input->post('id_leasing', TRUE)))->row();
+				$this->session->set_userdata(array('cabang' => $cabang->cabang));
+				$this->session->set_userdata(array('leasing' => $leasing->leasing));
+				redirect('data/import');
+			}
+		}
+		$data['leasing'] = $this->admin->get_all('tbl_leasing');
+		$data['cabang'] = $this->admin->get_all('tbl_cabang');
+		$this->template->admin('admin/data/form_import', $data);
+	}
+	public function preview()
+    {
+		$this->cek_login();
+		if ($this->input->post('preview', TRUE) == 'Preview') {
 					
 			$path = 'assets/file/import/';
 			require_once APPPATH . "/third_party/PHPExcel.php";
 			$config['upload_path'] = $path;
 			$config['allowed_types'] = 'xlsx|xls|csv';
 			$config['remove_spaces'] = TRUE;
+			$config['file_name'] = time();
+
 			$this->load->library('upload', $config);
 			$this->upload->initialize($config);            
 			if (!$this->upload->do_upload('uploadFile')) {
-				$error = array('error' => $this->upload->display_errors());
+				$error = array('error' => $this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i> Silahkan Upload File Terlebih Dahulu...'));				
+				redirect('data/import');
 			} else {
 				$data = array('upload_data' => $this->upload->data());
 			}
 			if(empty($error)){
 				if (!empty($data['upload_data']['file_name'])) {
 					$import_xls_file = $data['upload_data']['file_name'];
+					$this->session->set_userdata('file_name', $import_xls_file);
 				} else {
 					$import_xls_file = 0;
 				}
-
 				$inputFileName = $path . $import_xls_file;
-					
-				try {
-					$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-					$objReader = PHPExcel_IOFactory::createReader($inputFileType);
-					$objPHPExcel = $objReader->load($inputFileName);
-					$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
-					$flag = true;
-					$i=0;
-					foreach ($allDataInSheet as $value) {
-						if($flag) {
-							$flag = false;
-							continue;
-						}
-						
-						$inserdata[$i]['`ID_LEASING`'] = $value['A'];
-						$inserdata[$i]['`KONSUMEN`'] = $value['B'];
-						$inserdata[$i]['`UNIT`'] = $value['C'];
-						$inserdata[$i]['`NO_RANGKA`'] = $value['D'];
-						$inserdata[$i]['`NO_MESIN`'] = $value['E'];
-						$inserdata[$i]['`NO_POL`'] = $value['F'];
-						$inserdata[$i]['`OD`'] = $value['G'];
-						$inserdata[$i]['`WARNA`'] = $value['H'];
-						$inserdata[$i]['`TAHUN`'] = $value['I'];
-						$inserdata[$i]['`BULAN_UPDATE`'] = $value['J'];
-						$inserdata[$i]['`CATATAN`'] = $value['K'];
-						$inserdata[$i]['`SISA_HUTANG`'] = $value['L'];
-						$i++;
-					}               
-					$result = $this->admin->importData($inserdata);
-					// Hapus File Upload
-					unlink($inputFileName);    
-					if($result) {
-						$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
-						redirect('data/import');
-					} else {
-						$this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Data Gagal Disimpan');
-						redirect('data/import');
-					}
-				} catch (Exception $e) {
-					die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
-					. '": ' .$e->getMessage());
-				}
-			} else {
-				$this->session->set_flashdata('warning', '<i class="icon fa fa-smile-o"></i>  Tidak Ada File Import...');
-				redirect('data/import');
-			}                            
+
+				$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+				$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+				$objPHPExcel = $objReader->load($inputFileName);
+				$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+			}
+			
 		}
+		$data['allDataInSheet'] = $allDataInSheet;
+		$this->template->admin('admin/data/preview', $data);
+	}
+	public function importFile()
+    {
+		$this->cek_login();
+							
+		$path = 'assets/file/import/';
+		require_once APPPATH . "/third_party/PHPExcel.php";
+
+		$file = $this->session->userdata('file_name');
+		$inputFileName = $path.$file;
+			
+		try {
+			$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+			$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+			$objPHPExcel = $objReader->load($inputFileName);			
+		} catch (Exception $e) {
+			die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
+			. '": ' .$e->getMessage());
+		}          
+			$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+			$flag = true;
+			$i=0;
+			foreach ($allDataInSheet as $value) {
+				if($flag) {
+					$flag = false;
+					continue;
+				}
+					
+				$inserdata[$i]['`ID_LEASING`'] = $this->session->userdata('id_leasing');;
+				$inserdata[$i]['`KONSUMEN`'] = $value['A'];
+				$inserdata[$i]['`UNIT`'] = $value['B'];
+				$inserdata[$i]['`NO_RANGKA`'] = $value['C'];
+				$inserdata[$i]['`NO_MESIN`'] = $value['D'];
+				$inserdata[$i]['`NO_POL`'] = $value['E'];
+				$inserdata[$i]['`OD`'] = $value['F'];
+				$inserdata[$i]['`WARNA`'] = $value['G'];
+				$inserdata[$i]['`TAHUN`'] = $value['H'];
+				$inserdata[$i]['`BULAN_UPDATE`'] = $value['I'];
+				$inserdata[$i]['`CATATAN`'] = $value['J'];
+				$inserdata[$i]['`SISA_HUTANG`'] = $value['K'];
+				$i++;				
+			}     
+							
+			if ($i > 1){   
+				$this->admin->importData($inserdata);
+								
+				unlink($inputFileName);   
+				$this->session->unset_userdata('id_cabang'); 
+				$this->session->unset_userdata('id_leasing');
+				$this->session->unset_userdata('cabang');
+				$this->session->unset_userdata('leasing');
+				$this->session->unset_userdata('file_name');
+				$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
+				redirect('data/import');
+			} else {
+				unlink($inputFileName);  
+				$this->session->unset_userdata('file_name');
+				$this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Data Kosong...');
+				redirect('data/import');
+			}
 		$this->template->admin('admin/data/import');
-    }   
+	}
+	function batal()
+	{   
+		$path = 'assets/file/import/';
+		require_once APPPATH . "/third_party/PHPExcel.php";
+
+		$file = $this->session->userdata('file_name');
+		$inputFileName = $path.$file;
+		
+		unlink($inputFileName);   
+		$this->session->unset_userdata('id_cabang'); 
+		$this->session->unset_userdata('id_leasing');
+		$this->session->unset_userdata('cabang');
+		$this->session->unset_userdata('leasing');
+		$this->session->unset_userdata('file_name');
+		redirect('data/import');
+	}
+		
+	function get_leasing()
+	{
+        $id_cabang = $this->input->post('id_cabang',TRUE);
+        $data = $this->admin->get_where('tbl_leasing', array('id_cabang' => $id_cabang))->result();
+        echo json_encode($data);
+	}
 }

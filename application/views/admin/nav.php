@@ -1,4 +1,3 @@
-
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
@@ -32,6 +31,7 @@
                         <li><a href="<?= base_url(); ?>data/data_cabang">Data Cabang</a></li>
                         <li><a href="<?= base_url(); ?>data/data_leasing">Daftar Leasing</a></li>
                         <li><a href="<?= base_url(); ?>data/data_kendaraan">Data Kendaraan</a></li>
+                        <li><a href="<?= base_url(); ?>data/import_file">Import File</a></li>
                     </ul>
                 </li>
                 <li><a><i class="fa fa-user"></i> User <span class="fa fa-chevron-down"></span></a>

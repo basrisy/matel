@@ -5,9 +5,7 @@ class Administrator extends CI_Controller {
 
 	function __construct()
 	{
-	parent::__construct();
-		$this->load->library(array('template', 'form_validation'));
-		$this->load->model('admin');
+	    parent::__construct();
     }
 
     function cek_login()
@@ -17,7 +15,7 @@ class Administrator extends CI_Controller {
 		foreach($admin->result() As $key){
 			$isLogin = $key->isLogin;
 		}
-		if (!$this->session->userdata('login') || $this->session->userdata('isLogin') == $isLogin )
+		if ($this->session->userdata('isLogin') != $isLogin)
 		{
 			$this->session->sess_destroy();
 			redirect('login');

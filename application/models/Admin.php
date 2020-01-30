@@ -128,4 +128,11 @@ class Admin extends CI_Model {
 		$this->db->where($where);
 		return $this->db->get();
 	}
+	function isLogin($where='')
+	{
+		$this->db->select(array('id', 'isLogin'));
+		$this->db->from('tbl_administrator');
+		$this->db->where($where);
+		return $this->db->get();
+	}
 }

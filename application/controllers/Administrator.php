@@ -11,11 +11,12 @@ class Administrator extends CI_Controller {
     function cek_login()
 	{
 		$id = $this->session->userdata('id');
+		$log = $this->session->userdata('isLogin');
 		$admin = $this->admin->get_where('tbl_administrator',['id'=> $id]);
 		foreach($admin->result() As $key){
 			$isLogin = $key->isLogin;
 		}
-		if ($this->session->userdata('isLogin') != $isLogin)
+		if (!$id || $log != $isLogin)
 		{
 			$this->session->sess_destroy();
 			redirect('login');

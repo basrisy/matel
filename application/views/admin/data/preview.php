@@ -1,6 +1,9 @@
 <div class="x_panel">
     <div class="x_title">
         <h2>IMPORT DATA KENDARAAN</h2>
+        <div style="float: right">            
+            <a href="<?=base_url();?>data/batal" type="submit" class="btn btn-default"><i class="fa fa-history"></i> Batal</a>
+        </div>
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
@@ -76,7 +79,6 @@
             <?php } else { ?>
             <div class="ln_solid"></div>
             <button name="submit" value="Submit" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i> Import File</button>
-            <a href="<?=base_url();?>data/batal" type="submit" class="btn btn-default"><i class="fa fa-history"></i> Batal</a>
             <?php } ?>
         </form>
     </div>

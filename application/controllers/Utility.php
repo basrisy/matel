@@ -77,7 +77,6 @@ class Utility extends CI_Controller {
 		$data['data'] = $this->admin->get_all('tbl_kontak');
 		$this->template->admin('admin/utility/kontak', $data);
 	}
-
 	public function set_kontak()
 	{
 		$this->cek_login();

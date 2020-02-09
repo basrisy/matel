@@ -2,7 +2,7 @@
     <div class="x_title">
         <h2>DATA KENDARAAN</h2>
         <div style="float:right">
-            <a href="<?=base_url();?>data/import_file" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i> Import File</a>
+            <a href="<?=base_url();?>data/import" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i> Import File</a>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -34,10 +34,10 @@
                     <th>PEMILIK</th>
                     <th>SISA HUTANG</th>
                     <th>OVERDUE</th>
-                    <th>LEASING</th>
-                    <th>CABANG</th>
                     <th>NO RANGKA</th>                    
                     <th>NO MESIN</th>
+                    <th>LEASING</th>
+                    <th>CABANG</th>
                     <th>KET. DATA MASUK</th>
                     <th>CATATAN</th>
                     <th>Tindakan</th>
@@ -55,10 +55,10 @@
                     <td><?= $key->pemilik; ?></td>
                     <td style="text-align:right"><?= number_format($key->sisa_hutang); ?></td>
                     <td><?= $key->overdue; ?></td>
-                    <td><?= $key->leasing; ?></td>
-                    <td><?= $key->cabang; ?></td>
                     <td><?= $key->no_rangka; ?></td>
                     <td><?= $key->no_mesin; ?></td>
+                    <td><?= $key->leasing; ?></td>
+                    <td><?= $key->cabang; ?></td>
                     <td><?= $key->ket_data_masuk; ?></td>
                     <td><?= $key->catatan; ?></td>
                     <td style="vertical-align:middle;text-align:center">

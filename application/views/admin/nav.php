@@ -28,10 +28,10 @@
                 <li><a href="<?= base_url(); ?>home"><i class="fa fa-home"></i> Dashboard</a></li>
                 <li><a><i class="fa fa-book"></i> Management Data <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a href="<?= base_url(); ?>data/data_cabang">Data Cabang</a></li>
-                        <li><a href="<?= base_url(); ?>data/data_leasing">Daftar Leasing</a></li>
+                        <!-- <li><a href="<?= base_url(); ?>data/data_cabang">Data Cabang</a></li>
+                        <li><a href="<?= base_url(); ?>data/data_leasing">Daftar Leasing</a></li> -->
                         <li><a href="<?= base_url(); ?>data/data_kendaraan">Data Kendaraan</a></li>
-                        <li><a href="<?= base_url(); ?>data/import_file">Import File</a></li>
+                        <li><a href="<?= base_url(); ?>data/import">Import File</a></li>
                     </ul>
                 </li>
                 <li><a><i class="fa fa-user"></i> User <span class="fa fa-chevron-down"></span></a>

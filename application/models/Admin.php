@@ -90,22 +90,22 @@ class Admin extends CI_Model {
 
     function data_kendaraan()
 	{
-		$columns = '`ID`AS id,
-					`NO_POL`AS plat,
-                    `UNIT`AS model,
+		$columns = '`ID` AS id,
+					`NO_POL` AS plat,
+                    `UNIT` AS model,
                     `WARNA`AS warna,
-                    `leasing`,
-                    `cabang`,
-                    `NO_RANGKA`AS no_rangka,
-                    `NO_MESIN`AS no_mesin,
-                    `KONSUMEN`AS pemilik,
-                    `SISA_HUTANG`AS sisa_hutang,
-                    `OD`AS overdue,
-                    `INPUT_DATA`AS ket_data_masuk,
-                    `CATATAN`AS catatan';
+                    `LEASING` AS leasing,
+                    `CABANG` AS cabang,
+                    `NO_RANGKA` AS no_rangka,
+                    `NO_MESIN` AS no_mesin,
+                    `KONSUMEN` AS pemilik,
+                    `SISA_HUTANG` AS sisa_hutang,
+                    `OD` AS overdue,
+                    `INPUT_DATA` AS ket_data_masuk,
+                    `CATATAN` AS catatan';
 		$this->db->select($columns, FALSE);
 
-		$this->db->from('tbl_kendaraan a JOIN tbl_leasing b ON (a.ID_LEASING = b.id_leasing) JOIN tbl_cabang c ON (b.id_cabang = c.id_cabang)');
+		$this->db->from('tbl_kendaraan');
 
 		return $this->db->get();
 	}

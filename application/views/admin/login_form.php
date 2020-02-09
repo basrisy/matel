@@ -55,7 +55,7 @@
                         } ?>
                     </div>
                     <div>
-                        <input type="text" name="username" class="form-control" placeholder="Username" />
+                        <input type="text" name="username" class="form-control" placeholder="Username" autofocus/>
                     </div>
                     <div>
                         <input type="password" name="password" class="form-control" placeholder="Password"/>

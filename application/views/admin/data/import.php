@@ -25,9 +25,9 @@
         </div>
         <p>Untuk file importnya, silahkan download terlebih dahulu</p>
         <a href="<?=base_url();?>assets/file/DATA KENDARAAN - One Matel Indonesia.xlsx" class="btn btn-dark" title="Download File"><i class="glyphicon glyphicon-download-alt"></i> Download File</a>
-        <a data-toggle="modal" data-target="#pilih" class="btn btn-success" title="Import Data"><i class="glyphicon glyphicon-import"></i> Pilih Cabang & Leasing</a>
+        <!-- <a data-toggle="modal" data-target="#pilih" class="btn btn-success" title="Import Data"><i class="glyphicon glyphicon-import"></i> Pilih Cabang & Leasing</a> -->
         <div class="ln_solid"></div>
-        <table class="table table-striped">
+        <!-- <table class="table table-striped">
             <tr>
                 <td style="width: 40px">Cabang</td>
                 <td>: <?php echo $this->session->userdata('cabang'); ?></td>
@@ -36,8 +36,7 @@
                 <td>Leasing</td>
                 <td>: <?php echo $this->session->userdata('leasing'); ?></td>
             </tr>
-        </table>
-        <?php if ($this->session->userdata('cabang')) { ?>
+        </table> -->
         <form method="post" action="<?php echo base_url("data/preview"); ?>" enctype="multipart/form-data">
         <div class="input-group">
             <input type="file" name="uploadFile" class="form-control">
@@ -46,11 +45,10 @@
             </span>
         </div>
         </form>
-        <?php } ?>
     </div>
 </div>
 
-<!-- Import -->
+<!-- Pilih Cabang -->
 <div id="pilih" class="modal fade" data-backdrop="false" data-keyboard="false">
     <div class="modal-dialog"  role="document">
         <div class="modal-content">

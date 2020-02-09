@@ -218,17 +218,18 @@ class Data extends CI_Controller {
 		$this->cek_login();
 
 		if ($this->input->post('submit', TRUE) == 'Submit'){			
-			$this->form_validation->set_rules('id_cabang', 'Cabang', 'required');
-			$this->form_validation->set_rules('id_leasing', 'Leasing', 'required');
+			$this->form_validation->set_rules('preview', 'File Import', 'required');
+			// $this->form_validation->set_rules('id_cabang', 'Cabang', 'required');
+			// $this->form_validation->set_rules('id_leasing', 'Leasing', 'required');
 			if ($this->form_validation->run() == TRUE)
 			{
-				$this->session->set_userdata('id_cabang', $this->input->post('id_cabang', TRUE));
-				$this->session->set_userdata('id_leasing', $this->input->post('id_leasing', TRUE));
+				// $this->session->set_userdata('id_cabang', $this->input->post('id_cabang', TRUE));
+				// $this->session->set_userdata('id_leasing', $this->input->post('id_leasing', TRUE));
 				
-				$cabang  = $this->admin->get_where('tbl_cabang', array('id_cabang' => $this->input->post('id_cabang', TRUE)))->row();
-				$leasing  = $this->admin->get_where('tbl_leasing', array('id_leasing' => $this->input->post('id_leasing', TRUE)))->row();
-				$this->session->set_userdata(array('cabang' => $cabang->cabang));
-				$this->session->set_userdata(array('leasing' => $leasing->leasing));
+				// $cabang  = $this->admin->get_where('tbl_cabang', array('id_cabang' => $this->input->post('id_cabang', TRUE)))->row();
+				// $leasing  = $this->admin->get_where('tbl_leasing', array('id_leasing' => $this->input->post('id_leasing', TRUE)))->row();
+				// $this->session->set_userdata(array('cabang' => $cabang->cabang));
+				// $this->session->set_userdata(array('leasing' => $leasing->leasing));
 				redirect('data/import');
 			}
 		}
@@ -324,7 +325,7 @@ class Data extends CI_Controller {
 					continue;
 				}
 					
-				$inserdata[$i]['`ID_LEASING`'] = $this->session->userdata('id_leasing');;
+				// $inserdata[$i]['`ID_LEASING`'] = $this->session->userdata('id_leasing');;
 				$inserdata[$i]['`KONSUMEN`'] = $value['A'];
 				$inserdata[$i]['`UNIT`'] = $value['B'];
 				$inserdata[$i]['`NO_RANGKA`'] = $value['C'];
@@ -336,6 +337,8 @@ class Data extends CI_Controller {
 				$inserdata[$i]['`BULAN_UPDATE`'] = $value['I'];
 				$inserdata[$i]['`CATATAN`'] = $value['J'];
 				$inserdata[$i]['`SISA_HUTANG`'] = $value['K'];
+				$inserdata[$i]['`LEASING`'] = $value['L'];
+				$inserdata[$i]['`CABANG`'] = $value['M'];
 				$i++;				
 			}     
 							
@@ -367,11 +370,11 @@ class Data extends CI_Controller {
 		$inputFileName = $path.$file;
 		
 		unlink($inputFileName);   
-		$this->session->unset_userdata('id_cabang'); 
-		$this->session->unset_userdata('id_leasing');
-		$this->session->unset_userdata('cabang');
-		$this->session->unset_userdata('leasing');
-		$this->session->unset_userdata('file_name');
+		// $this->session->unset_userdata('id_cabang'); 
+		// $this->session->unset_userdata('id_leasing');
+		// $this->session->unset_userdata('cabang');
+		// $this->session->unset_userdata('leasing');
+		// $this->session->unset_userdata('file_name');
 		redirect('data/import');
 	}
 		

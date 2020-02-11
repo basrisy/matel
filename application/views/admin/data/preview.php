@@ -18,7 +18,7 @@
             </tr>
         </table> -->
         <form action="<?php echo base_url('data/importFile')?>" enctype="multipart/form-data" method="post">
-            <table id="tabledata" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <table id="tabledata" class="dt-responsive row-border nowrap display" style="width:100%">
                 <thead>
                     <tr>
                         <th>#</th>

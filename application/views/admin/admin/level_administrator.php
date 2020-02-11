@@ -24,7 +24,7 @@
                 echo '</div>';
             } ?>
         </div>
-        <table id="tabledata" class="table table-striped table-bordered table-responsive nowrap">
+        <table id="tabledata" class="dt-responsive row-border nowrap display" style="width:100%">
             <thead>
                 <tr>
                     <th style="width: 20px">#</th>

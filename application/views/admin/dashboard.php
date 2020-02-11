@@ -20,7 +20,8 @@
     <!-- bootstrap datepicker -->
     <link href="<?php echo base_url(); ?>assets/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet">
     <!-- Datatables -->
-    <link href="<?php echo base_url(); ?>assets/vendors/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="<?php echo base_url(); ?>assets/vendors/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet"> -->
+      <link href="<?php echo base_url(); ?>assets/vendors/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/extensions/FixedHeader/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet">
@@ -67,8 +68,8 @@
     <!-- bootstrap datepicker -->
     <script src="<?php echo base_url(); ?>assets/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <!-- Datatables -->
+    <!-- <script src="<?php echo base_url(); ?>assets/vendors/datatables/media/js/dataTables.bootstrap.min.js"></script> -->
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/vendors/datatables/media/js/dataTables.bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/js/buttons.flash.min.js"></script>
@@ -89,7 +90,13 @@
 
     $(document).ready(function() {
       $('#tabledata').dataTable( {
-          "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]
+          lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+          processing: true,
+          serverSide: false,
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Indonesian.json"
+          },
+          fixedHeader: true
       });
 
       //Alert

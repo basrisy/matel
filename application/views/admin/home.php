@@ -4,7 +4,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
-    <table id="tabledata" class="table table-striped table-bordered dt-responsive table-responsive nowrap">
+    <table id="tabledata" class="dt-responsive row-border nowrap display" style="width:100%">
             <thead>
                 <tr>
                     <th>#</th>

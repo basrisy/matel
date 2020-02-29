@@ -98,7 +98,6 @@
           },
           fixedHeader: true
       });
-
       //Alert
       $('.alert-message').alert().delay(3000).slideUp('slow');
       $('.toast').fadeIn(400).delay(3000).fadeOut(400);   

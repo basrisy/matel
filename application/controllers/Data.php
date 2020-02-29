@@ -339,6 +339,7 @@ class Data extends CI_Controller {
 				$inserdata[$i]['`SISA_HUTANG`'] = $value['K'];
 				$inserdata[$i]['`LEASING`'] = $value['L'];
 				$inserdata[$i]['`CABANG`'] = $value['M'];
+				$inserdata[$i]['`USER_SYNCHRONE`'] = " ";
 				$i++;				
 			}     
 							

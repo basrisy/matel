@@ -48,19 +48,19 @@
                             $flag = false;
                             continue;
                         }
-                        $no_rangka = (!empty($value['C']))? "" : " style='background: #EABBB0;'";
-                        $no_mesin = (!empty($value['D']))? "" : " style='background: #EABBB0;'";
+                        $unit = (!empty($value['B']))? "" : " style='background: #EABBB0;'";
                         $no_pol = (!empty($value['E']))? "" : " style='background: #EABBB0;'";
-                        if($no_rangka || $no_mesin || $no_pol){
+                        $leasing = (!empty($value['L']))? "" : " style='background: #EABBB0;'";
+                        if($unit || $no_pol || $leasing){
                             $kosong++;
                         }
                     ?>
                     <tr>
                         <td><?= ++$no; ?></td>
                         <td><?= $inserdata[$i]['`KONSUMEN`'] = $value['A']; ?></td>
-                        <td><?= $inserdata[$i]['`UNIT`'] = $value['B']; ?></td>
-                        <td <?= $no_rangka; ?>><?= $inserdata[$i]['`NO_RANGKA`'] = $value['C']; ?></td>
-                        <td <?= $no_mesin; ?>><?= $inserdata[$i]['`NO_MESIN`'] = $value['D']; ?></td>
+                        <td <?= $unit; ?>><?= $inserdata[$i]['`UNIT`'] = $value['B']; ?></td>
+                        <td><?= $inserdata[$i]['`NO_RANGKA`'] = $value['C']; ?></td>
+                        <td><?= $inserdata[$i]['`NO_MESIN`'] = $value['D']; ?></td>
                         <td <?= $no_pol; ?>><?= $inserdata[$i]['`NO_POL`'] = $value['E']; ?></td>
                         <td><?= $inserdata[$i]['`OD`'] = $value['F']; ?></td>
                         <td><?= $inserdata[$i]['`WARNA`'] = $value['G']; ?></td>
@@ -68,14 +68,14 @@
                         <td><?= $inserdata[$i]['`BULAN_UPDATE`'] = $value['I']; ?></td>
                         <td><?= $inserdata[$i]['`CATATAN`'] = $value['J']; ?></td>
                         <td style="text-align:right"><?= $inserdata[$i]['`SISA_HUTANG`'] = number_format($value['K']); ?></td>
-                        <td><?= $inserdata[$i]['`LEASING`'] = $value['L']; ?></td>
+                        <td <?= $leasing; ?>><?= $inserdata[$i]['`LEASING`'] = $value['L']; ?></td>
                         <td><?= $inserdata[$i]['`CABANG`'] = $value['M']; ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>
-            </table> 
+            </table>
             <?php if($kosong > 0 ){ ?>                
-            <?php echo "<div style='color: red;'> Data belum lengkap, Ada <b>$kosong</b> data yang belum diisi.</div>"; ?>
+            <?php echo "<div style='color: red;'> Data belum lengkap, Ada <b>$kosong</b> data yang belum diisi.</div> <p>Data UNIT, NO.POLISI dan LEASING harus terisi.</p>"; ?>
             <?php } else { ?>
             <div class="ln_solid"></div>
             <button name="submit" value="Submit" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i> Import File</button>

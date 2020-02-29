@@ -36,11 +36,18 @@
                 </li>
                 <li><a><i class="fa fa-user"></i> User <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+                        <li><a href="<?= base_url(); ?>user/user_baru">User Baru</a></li>
                         <li><a href="<?= base_url(); ?>user/data_user">User Terdaftar</a></li>
+                        <li><a href="<?= base_url(); ?>user/user_blokir">User Diblokir</a></li>
                         <!-- <li><a href="#">Pendaftaran User</a></li> -->
                     </ul>
                 </li>
-                <!-- <li><a href="#"><i class="fa fa-file-text-o"></i> Laporan</a></li> -->
+                <li><a><i class="fa fa-file-text-o"></i> Laporan <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="<?= base_url(); ?>laporan/user_prabayar">User Prabayar</a></li>
+                        <li><a href="<?= base_url(); ?>laporan/user_free">User Free</a></li>
+                    </ul>
+                </li>
                 <li><a><i class="fa fa-wrench"></i> Utility <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<?= base_url(); ?>utility/tentang_kami">Tentang Kami</a></li>

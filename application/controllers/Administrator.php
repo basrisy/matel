@@ -25,7 +25,16 @@ class Administrator extends CI_Controller {
     
     public function index()
     {
-		$this->cek_login();
+        $this->cek_login();
+        
+        if ($this->agent->is_browser()){
+			$data['agent'] = $this->agent->browser().' '.$this->agent->version();
+		}elseif ($this->agent->is_mobile()){
+			$data['agent'] = $this->agent->mobile();
+		}else{
+			$data['agent'] = 'Data user gagal di dapatkan';
+        }
+        
         $data['data'] = $this->admin->get_all('tbl_administrator');
         $data['level'] = $this->admin->get_all('tbl_leveladmin');
         $this->template->admin('admin/admin/administrator', $data);

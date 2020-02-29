@@ -55,6 +55,16 @@
     </div>
 </div>
 
+<div class="x_panel">
+<?php 
+    echo "Di akses dari :<br/>";
+    echo "Browser = ". $agent . "<br/>";
+    echo "Sistem Operasi = " . $this->agent->platform() ."<br/>"; // Platform info (Windows, Linux, Mac, etc.)
+    //ip hanya muncul pada hosting
+    echo "IP = " . $this->input->ip_address();
+?>
+</div>
+
 <!-- Modal Tambah User-->
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" id="tambah" class="modal fade">
     <div class="modal-dialog">

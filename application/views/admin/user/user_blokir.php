@@ -1,6 +1,6 @@
 <div class="x_panel">
     <div class="x_title">
-        <h2>USER TERDAFTAR</h2>
+        <h2>USER BLOKIR</h2>
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
@@ -54,10 +54,10 @@
                     <td><?= $key->no_hp; ?></td>
                     <td><?php foreach($level->result() as $l){ if($key->level == $l->id){ echo $l->tipe; }}?></td>
                     <td><?php if ($sisahari < 0) { echo "0 Hari"; } else { echo number_format($sisahari)." Hari"; }?></td>     
-                    <td><?php if($key->status_aktif == 0 && $sisahari > 0) { echo "Aktif";} else if($key->status_aktif == 0 && $masaaktif > $sekarang) { echo "<p style='color: red;'>Habis Masa Aktif</p>";} else if($sisahari > 1){ echo "<p style='color: red;'>User Blokir</p>";} else { echo "Tidak Aktif";} ?></td>
+                    <td><p style='color: red;'>User Blokir</p></td>
                     <td>
-                        <a data-toggle="modal" data-target="#perpanjang<?=$key->id;?>" style="width: 70px" class="btn btn-xs btn-dark" title="Perbarui Masa Aktif"><i class="fa fa-clock-o"></i> Perbarui</a>
-                        <a href="<?=base_url();?>user/blokir/<?=$key->id;?>" style="width: 70px" class="btn btn-xs btn-dark" title="Blokir User"><i class="fa fa-lock"></i> Blokir</a>
+                        <a data-toggle="modal" data-target="#aktiv<?=$key->id;?>" style="width: 70px" class="btn btn-xs btn-dark" title="Aktifkan"><i class="fa fa-unlock"></i> Aktifkan</a>
+                        <a href="<?=base_url();?>user/hapus_user/<?=$key->id;?>" style="width: 70px" class="btn btn-xs btn-danger" title="Hapus" onclick="return confirm('Yakin Ingin Menghapus Data ini ?')"><i class="fa fa-trash"></i> Hapus</a>
                     </td>
                     <td><?= date('d-m-Y h:i:s A', strtotime($key->terdaftar_pada)); ?></td>
                     <td><?= date('d-m-Y h:i:s A', strtotime($key->berakhir_pada)); ?></td>
@@ -69,22 +69,22 @@
     </div>
 </div>
 
-<!-- modal perbarui -->
+<!-- Aktivasi blokir -->
 <?php foreach($data->result() AS $key): 
     $masaaktif = $key->berakhir_pada;
     $sekarang = date('d-m-Y h:i:s A');
     $masaberlaku = strtotime($masaaktif) - strtotime($sekarang);
     $sisahari = $masaberlaku/(24*60*60);
 ?>
-<div id="perpanjang<?=$key->id;?>" class="modal fade" data-backdrop="false" data-keyboard="false">
+<div id="aktiv<?=$key->id;?>" class="modal fade" data-backdrop="false" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered"  role="document">
         <div class="modal-content">
         <div class="modal-header">
             <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-            <h4 class="modal-title">Perpanjang Masa Aktif</h4>
+            <h4 class="modal-title">Aktifkan Blokir</h4>
             <div class="clearfix"></div>
         </div>
-        <form class="form-horizontal" action="<?php echo base_url('user/perbarui')?>" method="post" enctype="multipart/form-data" role="form">
+        <form class="form-horizontal" action="<?php echo base_url('user/aktivasi_blokir')?>" method="post" enctype="multipart/form-data" role="form">
             <div class="modal-body">
                 <input type="hidden" name="id" value="<?= $key->id; ?>">
                 <input type="hidden" name="nama" value="<?= $key->nama; ?>">

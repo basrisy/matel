@@ -54,7 +54,7 @@
                     <td><?= $key->no_hp; ?></td>
                     <td><?php foreach($level->result() as $l){ if($key->level == $l->id){ echo $l->tipe; }}?></td>
                     <td><?php if ($sisahari < 0) { echo "0 Hari"; } else { echo number_format($sisahari)." Hari"; }?></td>     
-                    <td><?php if($key->status_aktif == 0 && $sisahari > 0) { echo "Aktif";} else if($key->status_aktif == 0 && $masaaktif > $sekarang) { echo "<p style='color: red;'>Habis Masa Aktif</p>";} else if($sisahari > 1){ echo "<p style='color: red;'>User Blokir</p>";} else { echo "Tidak Aktif";} ?></td>
+                    <td><?php if($key->status_aktif == 0 && $sisahari > 0) { echo "Aktif";} else if($key->status_aktif == 0 && $masaaktif < $sekarang) { echo "<a style='color: red;'>Habis Masa Aktif</a>";} else { echo "Tidak Aktif";} ?></td>
                     <td>
                         <a data-toggle="modal" data-target="#perpanjang<?=$key->id;?>" style="width: 70px" class="btn btn-xs btn-dark" title="Perbarui Masa Aktif"><i class="fa fa-clock-o"></i> Perbarui</a>
                         <a href="<?=base_url();?>user/blokir/<?=$key->id;?>" style="width: 70px" class="btn btn-xs btn-dark" title="Blokir User"><i class="fa fa-lock"></i> Blokir</a>

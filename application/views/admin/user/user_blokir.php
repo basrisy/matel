@@ -54,7 +54,7 @@
                     <td><?= $key->no_hp; ?></td>
                     <td><?php foreach($level->result() as $l){ if($key->level == $l->id){ echo $l->tipe; }}?></td>
                     <td><?php if ($sisahari < 0) { echo "0 Hari"; } else { echo number_format($sisahari)." Hari"; }?></td>     
-                    <td><p style='color: red;'>User Blokir</p></td>
+                    <td><a style='color: red;'>User Blokir</a></td>
                     <td>
                         <a data-toggle="modal" data-target="#aktiv<?=$key->id;?>" style="width: 70px" class="btn btn-xs btn-dark" title="Aktifkan"><i class="fa fa-unlock"></i> Aktifkan</a>
                         <a href="<?=base_url();?>user/hapus_user/<?=$key->id;?>" style="width: 70px" class="btn btn-xs btn-danger" title="Hapus" onclick="return confirm('Yakin Ingin Menghapus Data ini ?')"><i class="fa fa-trash"></i> Hapus</a>

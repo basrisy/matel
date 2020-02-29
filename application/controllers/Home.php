@@ -26,7 +26,13 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$this->cek_login();
-		$data['user_terdaftar'] = $this->admin->get_all('tbl_user');
+		$bulan = date('Y-m');
+		$data['kendaraan'] 	= $this->admin->count('tbl_kendaraan');
+		$data['user_prabayar'] 	= $this->admin->count_LogUser(['Super User', 'User'],['aksi'=> 'Aktivasi User','tanggal' => $bulan]);
+		$data['user_free'] 	= $this->admin->count_LogUser(['Free'],['aksi'=> 'Aktivasi User','tanggal' => $bulan]);
+		$data['jml_user'] 	= $this->admin->count_User(['0','2']);
+
+		$data['data'] = $this->admin->User_Where_in(['0', '2']);
 		$data['kota'] = $this->admin->get_all('tbl_kabupaten');
 		$data['level'] = $this->admin->get_all('tbl_level');
 		$this->template->admin('admin/home', $data);

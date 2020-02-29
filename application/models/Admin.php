@@ -112,7 +112,7 @@ class Admin extends CI_Model {
     
     public function importData($data) {
 
-        $qwery = $this->db->insert_batch('tbl_kendaraan_1',$data);
+        $qwery = $this->db->insert_batch('tbl_kendaraan',$data);
         if ($qwery){
             return TRUE;
         } else {
@@ -134,5 +134,27 @@ class Admin extends CI_Model {
 		$this->db->from('tbl_administrator');
 		$this->db->where($where);
 		return $this->db->get();
+	}
+	
+	function User_Where_in($where_in)
+	{
+		$this->db->from('tbl_user');
+		$this->db->where_in('status_aktif', $where_in);
+		return $this->db->get();
+	}
+	function count_User($where_in)
+	{
+		$this->db->from('tbl_user');
+		$this->db->where_in('status_aktif', $where_in);
+
+		return $this->db->count_all_results();
+	}
+	
+	function count_LogUser($where_in)
+	{	$this->db->select(array(date('tanggal,"%Y-%m") as tanggal'), 'aksi'));
+		$this->db->from('tbl_log_user');
+		$this->db->where_in('new_level', $where_in);
+
+		return $this->db->count_all_results();
 	}
 }

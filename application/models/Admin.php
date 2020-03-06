@@ -109,10 +109,44 @@ class Admin extends CI_Model {
 
 		return $this->db->get();
 	}
-    
-    public function importData($data) {
+	function data_kendaraan1()
+	{
+		$columns = '`ID` AS id,
+					`NO_POL` AS plat,
+                    `UNIT` AS model,
+                    `WARNA`AS warna,
+                    `LEASING` AS leasing,
+                    `CABANG` AS cabang,
+                    `NO_RANGKA` AS no_rangka,
+                    `NO_MESIN` AS no_mesin,
+                    `KONSUMEN` AS pemilik,
+                    `SISA_HUTANG` AS sisa_hutang,
+                    `OD` AS overdue,
+                    `INPUT_DATA` AS ket_data_masuk,
+                    `CATATAN` AS catatan';
+		$this->db->select($columns, FALSE);
 
-        $qwery = $this->db->insert_batch('tbl_kendaraan',$data);
+		$this->db->from('tbl_kendaraan_1');
+
+		return $this->db->get();
+	}
+    
+	public function importData($data)
+	{
+
+        $qwery = $this->db->insert_batch('tbl_kendaraan_1',$data);
+        if ($qwery){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    
+	}
+    
+	public function importDuplikat($data)
+	{
+
+        $qwery = $this->db->insert_batch('tbl_kendaraan_temp',$data);
         if ($qwery){
             return TRUE;
         } else {
@@ -150,10 +184,14 @@ class Admin extends CI_Model {
 		return $this->db->count_all_results();
 	}
 	
-	function count_LogUser($where_in)
-	{	$this->db->select(array(date('tanggal,"%Y-%m") as tanggal'), 'aksi'));
+	function count_LogUser($aksi ='', $level ='', $where)
+	{	
+		$this->db->select(array('tanggal', 'aksi','user'));
 		$this->db->from('tbl_log_user');
-		$this->db->where_in('new_level', $where_in);
+		$this->db->where_in('aksi', $aksi);
+		$this->db->where_in('new_level', $level);
+		$this->db->where($where);
+		$this->db->group_by('user');
 
 		return $this->db->count_all_results();
 	}

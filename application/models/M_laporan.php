@@ -28,7 +28,7 @@ class M_laporan extends CI_Model {
 		$this->db->group_by('a.user');
 		return $this->db->get();
 	}
-    function getUserFree($where_in, $where)
+    function getUserFree($aksi, $level, $where)
 	{
 		$this->db->select( array(
 			'a.tanggal as tanggal ',
@@ -43,9 +43,12 @@ class M_laporan extends CI_Model {
             'b.berakhir_pada as berakhir_pada'));
 		$this->db->from('tbl_log_user AS a');
 		$this->db->join('tbl_user AS b', 'b.nama = a.user', ' left outer');
-		$this->db->where_in('a.new_level', $where_in);
+		$this->db->where_in('a.aksi', $aksi);
+		$this->db->where_in('a.new_level', $level);
 		$this->db->where($where);
+		$this->db->group_by('a.tanggal');
 		$this->db->group_by('a.user');
+		$this->db->group_by('a.new_level');
 		return $this->db->get();
 	}
 }

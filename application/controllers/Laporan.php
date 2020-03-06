@@ -35,7 +35,7 @@ class Laporan extends CI_Controller {
 				$tgl_akhir = $this->input->post('tgl_akhir', TRUE);
             } else {
 				$this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Gunakan rentang waktu');
-				redirect('stock/masuk');
+				redirect('laporan/user_prabayar');
 			}
         } else {
             $tgl_mulai = date('Y-m-01');
@@ -45,9 +45,10 @@ class Laporan extends CI_Controller {
         $akhir = $tgl_akhir;
 		$data['tgl_mulai'] = $mulai;
 		$data['tgl_akhir'] = $akhir;
-		$where_in = ['Super User', 'User'];
-		$where = ['aksi' => 'Aktivasi User', 'tanggal >=' => $mulai, 'tanggal <=' => $akhir];
-		$data['data'] = $this->m_laporan->getUserPrabayar($where_in, $where);
+		$aksi = ['Aktivasi User', 'Update Tipe Akun'];
+		$level = ['Super User', 'User'];
+		$where = ['tanggal >=' => $mulai, 'tanggal <=' => $akhir];
+		$data['data'] = $this->m_laporan->getUserPrabayar($aksi, $level, $where);
 		$data['kota'] = $this->admin->get_all('tbl_kabupaten');
 		$data['level'] = $this->admin->get_all('tbl_level');
 		$this->template->admin('admin/laporan/user_prabayar',$data);
@@ -65,7 +66,7 @@ class Laporan extends CI_Controller {
 				$tgl_akhir = $this->input->post('tgl_akhir', TRUE);
             } else {
 				$this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Gunakan rentang waktu');
-				redirect('stock/masuk');
+				redirect('laporan/user_free');
 			}
         } else {
             $tgl_mulai = date('Y-m-01');
@@ -75,9 +76,10 @@ class Laporan extends CI_Controller {
         $akhir = $tgl_akhir;
 		$data['tgl_mulai'] = $mulai;
 		$data['tgl_akhir'] = $akhir;
-		$where_in = ['Free', 'Trial'];
-		$where = ['aksi' => 'Aktivasi User', 'tanggal >=' => $mulai, 'tanggal <=' => $akhir];
-		$data['data'] = $this->m_laporan->getUserFree($where_in, $where);
+		$aksi = ['Aktivasi User', 'Update Tipe Akun'];
+		$level = ['Free', 'Trial'];
+		$where = ['tanggal >=' => $mulai, 'tanggal <=' => $akhir];
+		$data['data'] = $this->m_laporan->getUserFree($aksi, $level, $where);
 		$data['kota'] = $this->admin->get_all('tbl_kabupaten');
 		$data['level'] = $this->admin->get_all('tbl_level');
 		$this->template->admin('admin/laporan/user_free',$data);

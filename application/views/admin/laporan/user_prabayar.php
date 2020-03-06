@@ -48,6 +48,7 @@
                 <tr>
                     <th>#</th>
                     <th>Tanggal Aktivasi</th>
+                    <th>Keterangan</th>
                     <th>Username (Email)</th>
                     <th>Nama</th>
                     <th>Kota</th>
@@ -68,6 +69,7 @@
                 <tr>
                     <td><?= ++$no; ?></td>
                     <td><?= date('d-m-Y h:i:s A', strtotime($key->time)); ?></td>
+                    <td><?= $key->aksi; ?></td>
                     <td><?= $key->email; ?></td>
                     <td><?= $key->nama; ?></td>
                     <td><?php foreach($kota->result() as $k){ if($key->id_kabupaten == $k->ID){ echo $k->NAMA; }}?></td>

@@ -293,8 +293,8 @@ class Data extends CI_Controller {
 				$objPHPExcel = $objReader->load($inputFileName);
 				$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
 			}
-			
-		}
+		}		
+		$data['kendaraan'] = $this->admin->data_kendaraan1();
 		$data['allDataInSheet'] = $allDataInSheet;
 		$this->template->admin('admin/data/preview', $data);
 	}
@@ -324,7 +324,6 @@ class Data extends CI_Controller {
 					$flag = false;
 					continue;
 				}
-					
 				// $inserdata[$i]['`ID_LEASING`'] = $this->session->userdata('id_leasing');;
 				$inserdata[$i]['`KONSUMEN`'] = $value['A'];
 				$inserdata[$i]['`UNIT`'] = $value['B'];
@@ -340,26 +339,25 @@ class Data extends CI_Controller {
 				$inserdata[$i]['`LEASING`'] = $value['L'];
 				$inserdata[$i]['`CABANG`'] = $value['M'];
 				$inserdata[$i]['`USER_SYNCHRONE`'] = " ";
-				$i++;				
-			}     
-							
-			if ($i > 1){   
-				$this->admin->importData($inserdata);
-								
-				unlink($inputFileName);   
-				$this->session->unset_userdata('id_cabang'); 
-				$this->session->unset_userdata('id_leasing');
-				$this->session->unset_userdata('cabang');
-				$this->session->unset_userdata('leasing');
-				$this->session->unset_userdata('file_name');
-				$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
-				redirect('data/import');
-			} else {
+				$i++;
+			}
+										
+			if (empty($i)){
 				unlink($inputFileName);  
 				$this->session->unset_userdata('file_name');
 				$this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Data Kosong...');
-				redirect('data/import');
+			} else {
+				$this->admin->importData($inserdata);
+								
+				unlink($inputFileName);   
+				// $this->session->unset_userdata('id_cabang'); 
+				// $this->session->unset_userdata('id_leasing');
+				// $this->session->unset_userdata('cabang');
+				// $this->session->unset_userdata('leasing');
+				$this->session->unset_userdata('file_name');
+				$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
 			}
+			redirect('data/import');
 		$this->template->admin('admin/data/import');
 	}
 	function batal()

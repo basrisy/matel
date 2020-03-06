@@ -27,13 +27,13 @@
                         <th>NO RANGKA</th>              
                         <th>NO MESIN</th> 
                         <th>PLAT</th>
-                        <th>OVERDUE</th>     
+                        <th>LEASING</th> 
                         <th>WARNA</th>   
                         <th>TAHUN</th>
                         <th>BULAN UPDATE</th>
+                        <th>OVERDUE</th>    
                         <th>CATATAN</th>
                         <th>SISA HUTANG</th>
-                        <th>LEASING</th>
                         <th>CABANG</th>
                     </tr>
                 </thead>
@@ -41,35 +41,35 @@
                     <?php 
                         $no=0; 
                         $flag = true;
-                        $i=0; 
                         $kosong = 0;
-                    foreach ($allDataInSheet as $value) { 
+                        $duplikat = true;
+                        foreach ($allDataInSheet as $value) { 
                         if($flag) {
                             $flag = false;
                             continue;
                         }
-                        $unit = (!empty($value['B']))? "" : " style='background: #EABBB0;'";
-                        $no_pol = (!empty($value['E']))? "" : " style='background: #EABBB0;'";
-                        $leasing = (!empty($value['L']))? "" : " style='background: #EABBB0;'";
+                        $unit = ($value['B'])? "" : " style='background: #EABBB0;'";
+                        $no_pol = ($value['E'])? "" : " style='background: #EABBB0;'";
+                        $leasing = ($value['L'])? "" : " style='background: #EABBB0;'";
                         if($unit || $no_pol || $leasing){
                             $kosong++;
                         }
                     ?>
                     <tr>
                         <td><?= ++$no; ?></td>
-                        <td><?= $inserdata[$i]['`KONSUMEN`'] = $value['A']; ?></td>
-                        <td <?= $unit; ?>><?= $inserdata[$i]['`UNIT`'] = $value['B']; ?></td>
-                        <td><?= $inserdata[$i]['`NO_RANGKA`'] = $value['C']; ?></td>
-                        <td><?= $inserdata[$i]['`NO_MESIN`'] = $value['D']; ?></td>
-                        <td <?= $no_pol; ?>><?= $inserdata[$i]['`NO_POL`'] = $value['E']; ?></td>
-                        <td><?= $inserdata[$i]['`OD`'] = $value['F']; ?></td>
-                        <td><?= $inserdata[$i]['`WARNA`'] = $value['G']; ?></td>
-                        <td><?= $inserdata[$i]['`TAHUN`'] = $value['H']; ?></td>
-                        <td><?= $inserdata[$i]['`BULAN_UPDATE`'] = $value['I']; ?></td>
-                        <td><?= $inserdata[$i]['`CATATAN`'] = $value['J']; ?></td>
-                        <td style="text-align:right"><?= $inserdata[$i]['`SISA_HUTANG`'] = number_format($value['K']); ?></td>
-                        <td <?= $leasing; ?>><?= $inserdata[$i]['`LEASING`'] = $value['L']; ?></td>
-                        <td><?= $inserdata[$i]['`CABANG`'] = $value['M']; ?></td>
+                        <td><?= $value['A']; ?></td>
+                        <td <?= $unit; ?>><?= $value['B']; ?></td>
+                        <td><?= $value['C']; ?></td>
+                        <td><?= $value['D']; ?></td>
+                        <td <?= $no_pol; ?>><?= $value['E']; ?></td>
+                        <td <?= $leasing; ?>><?= $value['L']; ?></td>
+                        <td><?= $value['G']; ?></td>
+                        <td><?= $value['H']; ?></td>
+                        <td><?= $value['I']; ?></td>
+                        <td><?= $value['F']; ?></td>
+                        <td><?= $value['J']; ?></td>
+                        <td style="text-align:right"><?=number_format($value['K']); ?></td>
+                        <td><?= $value['M']; ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>

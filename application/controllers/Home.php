@@ -26,10 +26,10 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$this->cek_login();
-		$bulan = date('Y-m');
 		$data['kendaraan'] 	= $this->admin->count('tbl_kendaraan');
-		$data['user_prabayar'] 	= $this->admin->count_LogUser(['Super User', 'User'],['aksi'=> 'Aktivasi User','tanggal' => $bulan]);
-		$data['user_free'] 	= $this->admin->count_LogUser(['Free'],['aksi'=> 'Aktivasi User','tanggal' => $bulan]);
+		$data['user_prabayar'] 	= $this->admin->count_LogUser(['Aktivasi User','Update Tipe Akun'],['Super User', 'User'],"YEAR(tanggal)=YEAR(CURDATE()) AND MONTH(tanggal)=MONTH(CURDATE())");
+		$data['user_prabayar'] 	= 0;
+		$data['user_free'] 	= $this->admin->count_LogUser(['Aktivasi User','Update Tipe Akun'], ['Free'], "YEAR(tanggal)=YEAR(CURDATE()) AND MONTH(tanggal)=MONTH(CURDATE())");
 		$data['jml_user'] 	= $this->admin->count_User(['0','2']);
 
 		$data['data'] = $this->admin->User_Where_in(['0', '2']);

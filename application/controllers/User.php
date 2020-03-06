@@ -100,7 +100,11 @@ class User extends CI_Controller {
 				$this->admin->update('tbl_user', $data, ['id' => $id]);
 				if($this->db->affected_rows() > 0)
 				{
-					activity_log("Update User", $nama, $level_lama, $lev->tipe, $tgl_akhir);				
+					if($lev->tipe == $level_lama){
+						activity_log("Update User", $nama, $level_lama, $lev->tipe, $tgl_akhir);
+					} else {	
+						activity_log("Update Tipe Akun", $nama, $level_lama, $lev->tipe, $tgl_akhir);
+					}			
 					$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
 					redirect('user/data_user');
 				}

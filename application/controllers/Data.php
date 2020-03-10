@@ -25,37 +25,42 @@ class Data extends CI_Controller {
 	public function kendaraan()
 	{
 		$this->cek_login();
-		$data['kendaraan'] = $this->m_kendaraan->data_kendaraan();
+		// $data['kendaraan'] = $this->m_kendaraan->data_kendaraan();
+		$data['admin'] = $this->session->userdata('id');
 		$this->template->admin('admin/data/data_kendaraan', $data);
 	}
 	public function hapus_kendaraan()
     {
 		$this->cek_login();
-        $id = $this->input->post('id',TRUE);
-		$pass = $this->input->post('password_admin',TRUE);
-		if ($this->input->post('submit', TRUE) == 'Submit')
-        {
-            $this->form_validation->set_rules('password_admin', 'Password Admin', "required");
+		$id = $this->uri->segment(3);
+		$this->admin->delete(['tbl_kendaraan'], ['id' => $id]);
+		$this->session->set_flashdata('success', '<i class="icon fa fa-frown-o"></i>  Data Berhasil Dihapus');
+		redirect('data/kendaraan');
 
-            if ($this->form_validation->run() == TRUE)
-            {
-                $get_data = $this->admin->get_where('tbl_administrator',['id_level' => 1])->row();
+        // $id = $this->input->post('id',TRUE);
+		// $pass = $this->input->post('password_admin',TRUE);
+		// if ($this->input->post('submit', TRUE) == 'Submit')
+        // {
+        //     $this->form_validation->set_rules('password_admin', 'Password Admin', "required");
 
-                if (md5($pass) == $get_data->password)
-                {
-					$this->admin->delete('tbl_kendaraan', array('id' => $id));
-					$this->session->set_flashdata('success', '<i class="icon fa fa-frown-o"></i>  Data Berhasil Dihapus');
-                    redirect('data/data_kendaraan');
-                } else {
-                    $this->session->set_flashdata('warning', '<i class="icon fa fa-smile-o"></i>  <strong>Maaf..</strong> Password yang anda masukan salah');
-                    redirect('data/data_kendaraan');
-                }
-            } else {
-                $this->session->set_flashdata('danger', '<i class="icon fa fa-warning"></i> Masukkan Password <strong>admin</strong> untuk menghapus data.');
-                redirect('data/data_kendaraan');
-            }
-        }
-		
+        //     if ($this->form_validation->run() == TRUE)
+        //     {
+        //         $get_data = $this->admin->get_where('tbl_administrator',['id_level' => 1])->row();
+
+        //         if (md5($pass) == $get_data->password)
+        //         {
+		// 			$this->admin->delete('tbl_kendaraan', array('id' => $id));
+		// 			$this->session->set_flashdata('success', '<i class="icon fa fa-frown-o"></i>  Data Berhasil Dihapus');
+        //             redirect('data/data_kendaraan');
+        //         } else {
+        //             $this->session->set_flashdata('warning', '<i class="icon fa fa-smile-o"></i>  <strong>Maaf..</strong> Password yang anda masukan salah');
+        //             redirect('data/data_kendaraan');
+        //         }
+        //     } else {
+        //         $this->session->set_flashdata('danger', '<i class="icon fa fa-warning"></i> Masukkan Password <strong>admin</strong> untuk menghapus data.');
+        //         redirect('data/data_kendaraan');
+        //     }
+        // }		
 	}
 	public function import()
     {
@@ -235,10 +240,6 @@ class Data extends CI_Controller {
 		$this->m_kendaraan->truncate_table();
 		redirect('data/import');
 	}
-	function get_json() {
-		header('Content-Type: application/json');
-		echo $this->m_kendaraan->get_all();
-	}
 	 
     function get_data_kendaraan()
     {
@@ -262,7 +263,7 @@ class Data extends CI_Controller {
             $row[] = $field->INPUT_DATA;
             $row[] = $field->CATATAN;
 			
-            $row[] = '<a data-toggle="modal" data-target="#hapus" class="btn btn-sm btn-danger" title="Hapus"><i class="fa fa-trash"></i> Hapus Data Ini</a>';
+            $row[] = '<a href="hapus_kendaraan/'.$field->ID.'" class="btn btn-sm btn-danger" title="Hapus"><i class="fa fa-trash"></i> Hapus Data Ini</a>';
             // $row[] = $field->TAHUN;
             // $row[] = $field->BULAN_UPDATE;
  
@@ -277,5 +278,5 @@ class Data extends CI_Controller {
         );
         //output dalam format JSON
         echo json_encode($output);
-    }
+	}
 }

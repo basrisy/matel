@@ -106,12 +106,6 @@ class M_kendaraan extends CI_Model {
             $this->db->update('tbl_kendaraan', $data); 
         }
     }
-    function get_all() { 
-        $this->datatables->select('ID, LEASING, CABANG, KONSUMEN, UNIT, NO_RANGKA, NO_MESIN, NO_POL, OD, WARNA, TAHUN, BULAN_UPDATE, CATATAN, INPUT_DATA, SISA_HUTANG');
-        $this->datatables->from('tbl_kendaraan');
-        $this->datatables->add_column('view', '<a href="world/edit/$1">edit</a> | <a href="world/delete/$1">delete</a>', 'ID');
-        return $this->datatables->generate();
-    }
 
     // SERVER-SIDE
     var $table = 'tbl_kendaraan'; //nama tabel dari database

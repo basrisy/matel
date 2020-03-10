@@ -223,10 +223,4 @@ class User extends CI_Controller {
 			redirect('user/data_user');
         }
 	}
-	function json(){
-        // $this->load->library('datatables');
-        $this->datatables->select('*');
-        $this->datatables->from('tbl_user');
-        return print_r($this->datatables->generate());
-	}
 }

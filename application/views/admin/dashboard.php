@@ -44,7 +44,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            One Matel Indonesia - ©2020 All Rights Reserved. <a href="#">v.202003.001</a>
+            One Matel Indonesia - ©2020 All Rights Reserved. <a href="#">v.202003.002</a>
           </div>
           <div class="clearfix"></div>
         </footer>

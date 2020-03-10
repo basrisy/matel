@@ -33,8 +33,20 @@ class Home extends CI_Controller {
 		$data['jml_user'] 	= $this->admin->count_User(['0','2']);
 
 		$data['data'] = $this->admin->User_Where_in(['0', '2']);
+		// $data['data'] = $this->m_user->getAll();
 		$data['kota'] = $this->admin->get_all('tbl_kabupaten');
 		$data['level'] = $this->admin->get_all('tbl_level');
 		$this->template->admin('admin/home', $data);
 	}
+	function json(){
+        $this->load->library('datatables');
+        $this->datatables->select('*');
+        $this->datatables->from('tbl_user');
+        return print_r($this->datatables->generate());
+	}
+	function get_user_json() { //data data produk by JSON object
+		header('Content-Type: application/json');
+		echo $this->m_user->get_all_user();
+	}
+	
 }

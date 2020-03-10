@@ -40,45 +40,45 @@
                 <tbody>
                     <?php 
                         $no=0; 
-                        $flag = true;
                         $kosong = 0;
-                        $duplikat = true;
-                        foreach ($allDataInSheet as $value) { 
-                        if($flag) {
-                            $flag = false;
-                            continue;
-                        }
-                        $unit = ($value['B'])? "" : " style='background: #EABBB0;'";
-                        $no_pol = ($value['E'])? "" : " style='background: #EABBB0;'";
-                        $leasing = ($value['L'])? "" : " style='background: #EABBB0;'";
+                        foreach ($data_temp as $key) : 
+
+                        $unit = ($key->UNIT)? "" : " style='background: #EABBB0;'";
+                        $no_pol = ($key->NO_POL)? "" : " style='background: #EABBB0;'";
+                        $leasing = ($key->LEASING)? "" : " style='background: #EABBB0;'";
                         if($unit || $no_pol || $leasing){
                             $kosong++;
                         }
                     ?>
                     <tr>
-                        <td><?= ++$no; ?></td>
-                        <td><?= $value['A']; ?></td>
-                        <td <?= $unit; ?>><?= $value['B']; ?></td>
-                        <td><?= $value['C']; ?></td>
-                        <td><?= $value['D']; ?></td>
-                        <td <?= $no_pol; ?>><?= $value['E']; ?></td>
-                        <td <?= $leasing; ?>><?= $value['L']; ?></td>
-                        <td><?= $value['G']; ?></td>
-                        <td><?= $value['H']; ?></td>
-                        <td><?= $value['I']; ?></td>
-                        <td><?= $value['F']; ?></td>
-                        <td><?= $value['J']; ?></td>
-                        <td style="text-align:right"><?=number_format($value['K']); ?></td>
-                        <td><?= $value['M']; ?></td>
+                        <td><?php echo ++$no; ?></td>
+                        <td><?php echo $key->KONSUMEN; ?></td>
+                        <td <?= $unit; ?>><?php echo $key->UNIT; ?></td>
+                        <td><?php echo $key->NO_RANGKA; ?></td>
+                        <td><?php echo $key->NO_MESIN; ?></td>
+                        <td <?= $no_pol; ?>><?php echo $key->NO_POL; ?></td>
+                        <td <?= $leasing; ?>><?php echo $key->LEASING; ?></td>
+                        <td><?php echo $key->WARNA; ?></td>
+                        <td><?php echo $key->TAHUN; ?></td>
+                        <td><?php echo $key->BULAN_UPDATE; ?></td>
+                        <td><?php echo $key->OD; ?></td>
+                        <td><?php echo $key->CATATAN; ?></td>
+                        <td style="text-align:right"><?php echo number_format($key->SISA_HUTANG); ?></td>
+                        <td><?php echo $key->CABANG; ?></td>
                     </tr>
-                    <?php } ?>
+                        <?php endforeach; ?>
                 </tbody>
             </table>
-            <?php if($kosong > 0 ){ ?>                
-            <?php echo "<div style='color: red;'> Data belum lengkap, Ada <b>$kosong</b> data yang belum diisi.</div> <p>Data UNIT, NO.POLISI dan LEASING harus terisi.</p>"; ?>
-            <?php } else { ?>
+            <p><?= $file_name; ?></p>
+            <p>Data Sama : <?= $ttl_sama-$kosong; ?></p>
+            <p>Data Tidak Lengkap : <?= $kosong; ?></p>
+            <p style='color: red;' >Note : Data UNIT, NO.POLISI dan LEASING harus terisi.</p>
+            <?php if($kosong <= 0 ){ ?>
             <div class="ln_solid"></div>
-            <button name="submit" value="Submit" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i> Import File</button>
+            <!-- <button name="submit" value="Submit" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i> Import File</button>
+            <button name="submit" value="Submit" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i> Replace</button> -->
+            <a href="<?=base_url();?>data/importFile" class="btn btn-primary" title="Insert data"><i class="glyphicon glyphicon-import"></i> Insert</a>
+            <a href="<?=base_url();?>data/importFileUpdate" class="btn btn-success" title="Insert dan Update data"><i class="glyphicon glyphicon-save-file"></i> Insert/Update</a>
             <?php } ?>
         </form>
     </div>

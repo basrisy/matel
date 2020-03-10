@@ -2,7 +2,7 @@
     <div class="x_title">
         <h2>DATA KENDARAAN</h2>
         <div style="float:right">
-            <a href="<?=base_url();?>data/import" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i> Import File</a>
+            <a href="<?php echo base_url();?>data/import" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i> Import File</a>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -24,7 +24,7 @@
                 echo '</div>';
             } ?>
         </div>
-        <table id="tabledata" class="dt-responsive row-border nowrap display" style="width:100%">
+        <table id="table" class="dt-responsive row-border nowrap display" style="width:100%">
             <thead>
                 <tr>
                     <th>#</th>
@@ -44,36 +44,14 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $no = 0; 
-                foreach($kendaraan->result() as $key) :
-                ?>
-                <tr>
-                    <td><?= ++$no; ?></td>
-                    <td><?= $key->plat; ?></td>
-                    <td><?= $key->model; ?></td>
-                    <td><?= $key->warna; ?></td>
-                    <td><?= $key->pemilik; ?></td>
-                    <td style="text-align:right"><?= number_format($key->sisa_hutang); ?></td>
-                    <td><?= $key->overdue; ?></td>
-                    <td><?= $key->no_rangka; ?></td>
-                    <td><?= $key->no_mesin; ?></td>
-                    <td><?= $key->leasing; ?></td>
-                    <td><?= $key->cabang; ?></td>
-                    <td><?= $key->ket_data_masuk; ?></td>
-                    <td><?= $key->catatan; ?></td>
-                    <td style="vertical-align:middle;text-align:center">
-                        <a data-toggle="modal" data-target="#hapus<?=$key->id;?>" class="btn btn-sm btn-danger" title="Hapus"><i class="fa fa-trash"></i> Hapus Data Ini</a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
 </div>
 
 <!-- Modal Hapus Data -->
-<?php foreach($kendaraan->result() as $key) :?>
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" id="hapus<?=$key->id;?>" class="modal fade">
+<?php foreach($kendaraan as $key) :?>
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" id="hapus<?php echo $key->ID;?>" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -83,35 +61,35 @@
             </div>
             <form class="form-horizontal" action="<?php echo base_url('data/hapus_kendaraan')?>" method="post" enctype="multipart/form-data" role="form">
                 <div class="modal-body">
-                    <input type="hidden" name="id" value="<?= $key->id; ?>">
+                    <input type="hidden" name="id" value="<?php echo $key->ID; ?>">
                     <table class="table table-striped">
                         <tr>
                             <td style="width: 100px">Model</td>
-                            <td>: <?= $key->model; ?></td>
+                            <td>: <?php echo $key->MODEL; ?></td>
                         </tr>
                         <tr>
                             <td>Plat</td>
-                            <td>: <?= $key->plat; ?></td>
+                            <td>: <?php echo $key->NO_POL; ?></td>
                         </tr>
                         <tr>
                             <td>Pemilik</td>
-                            <td>: <?= $key->pemilik; ?></td>
+                            <td>: <?php echo $key->KONSUMEN; ?></td>
                         </tr>
                         <tr>
                             <td>Sisa Hutang</td>
-                            <td>: <?= number_format($key->sisa_hutang).",-"; ?></td>
+                            <td>: <?php echo number_format($key->SISA_HUTANG).",-"; ?></td>
                         </tr>
                         <tr>
                             <td>Overdue</td>
-                            <td>: <?= $key->overdue; ?></td>
+                            <td>: <?php echo $key->OD; ?></td>
                         </tr>
                         <tr>
                             <td>Leasing</td>
-                            <td>: <?= $key->leasing; ?></td>
+                            <td>: <?php echo $key->LEASING; ?></td>
                         </tr>
                         <tr>
                             <td>Cabang</td>
-                            <td>: <?= $key->cabang; ?></td>
+                            <td>: <?php echo $key->CABANG; ?></td>
                         </tr>
                     </table>
                     <div class="ln_solid"></div>
@@ -133,3 +111,14 @@
     </div>
 </div>
 <?php endforeach; ?>
+
+<script type="text/javascript">
+
+    var save_method; //for save method string
+    var table;
+
+    $(document).ready(function() {
+        //datatables
+
+    });
+</script>

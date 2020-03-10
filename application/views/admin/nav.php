@@ -30,7 +30,7 @@
                     <ul class="nav child_menu">
                         <!-- <li><a href="<?= base_url(); ?>data/data_cabang">Data Cabang</a></li>
                         <li><a href="<?= base_url(); ?>data/data_leasing">Daftar Leasing</a></li> -->
-                        <li><a href="<?= base_url(); ?>data/data_kendaraan">Data Kendaraan</a></li>
+                        <li><a href="<?= base_url(); ?>data/kendaraan">Data Kendaraan</a></li>
                         <li><a href="<?= base_url(); ?>data/import">Import File</a></li>
                     </ul>
                 </li>

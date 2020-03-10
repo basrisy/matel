@@ -126,7 +126,7 @@ class Admin extends CI_Model {
                     `CATATAN` AS catatan';
 		$this->db->select($columns, FALSE);
 
-		$this->db->from('tbl_kendaraan_1');
+		$this->db->from('tbl_kendaraan');
 
 		return $this->db->get();
 	}
@@ -134,7 +134,7 @@ class Admin extends CI_Model {
 	public function importData($data)
 	{
 
-        $qwery = $this->db->insert_batch('tbl_kendaraan_1',$data);
+        $qwery = $this->db->insert_batch('tbl_kendaraan_temp',$data);
         if ($qwery){
             return TRUE;
         } else {

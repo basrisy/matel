@@ -39,7 +39,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
-    <table id="tabledata" class="dt-responsive row-border nowrap display" style="width:100%">
+        <table id="tabledata" class="dt-responsive row-border nowrap display" style="width:100%">
             <thead>
                 <tr>
                     <th>#</th>

@@ -6,13 +6,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="images/favicon.ico" type="image/ico" />
+	  <!-- <link rel="icon" href="images/favicon.ico" type="image/ico" /> -->
 
     <title>One Matel Indonesia</title>
 
     <!-- Bootstrap -->
     <link href="<?php echo base_url(); ?>assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>assets/vendors/bootstrap/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="<?php echo base_url(); ?>assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- iCheck -->
@@ -20,8 +19,7 @@
     <!-- bootstrap datepicker -->
     <link href="<?php echo base_url(); ?>assets/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet">
     <!-- Datatables -->
-    <!-- <link href="<?php echo base_url(); ?>assets/vendors/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet"> -->
-      <link href="<?php echo base_url(); ?>assets/vendors/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/vendors/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/extensions/FixedHeader/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet">
@@ -46,7 +44,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            One Matel Indonesia - ©2020 All Rights Reserved. <a href="#">v.202001.01</a>
+            One Matel Indonesia - ©2020 All Rights Reserved. <a href="#">v.202003.001</a>
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -58,7 +56,6 @@
     <script src="<?php echo base_url(); ?>assets/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="<?php echo base_url(); ?>assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/vendors/bootstrap/dist/js/bootstrap-datepicker.min.js"></script>
     <!-- FastClick -->
     <script src="<?php echo base_url(); ?>assets/vendors/fastclick/lib/fastclick.js"></script>
     <!-- iCheck -->
@@ -68,7 +65,6 @@
     <!-- bootstrap datepicker -->
     <script src="<?php echo base_url(); ?>assets/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <!-- Datatables -->
-    <!-- <script src="<?php echo base_url(); ?>assets/vendors/datatables/media/js/dataTables.bootstrap.min.js"></script> -->
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
@@ -77,7 +73,7 @@
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/js/buttons.print.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/FixedHeader/js/dataTables.fixedHeader.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Responsive/responsive.bootstrap.js"></script>
+    <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Responsive/js/responsive.bootstrap.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Scroller/js/dataTables.scroller.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/jszip/dist/jszip.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/pdfmake/build/pdfmake.min.js"></script>
@@ -87,8 +83,32 @@
     <script src="<?php echo base_url(); ?>assets/build/js/custom.min.js"></script>
 
     <script type="text/javascript">
-
     $(document).ready(function() {
+      //datatables
+      var table = $('#table').DataTable({ 
+        lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+        processing: true, 
+        serverSide: true, 
+        order: [], 
+          
+        ajax: {
+          url: "<?php echo site_url('data/get_data_kendaraan')?>",
+          type: "POST"
+        },
+
+          
+        columnDefs: [
+          { 
+            targets: [ 0 ], 
+            orderable: false, 
+          },
+        ],
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Indonesian.json"
+        },
+        fixedHeader: true
+      });
+
       $('#tabledata').dataTable( {
           lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
           processing: true,
@@ -117,27 +137,6 @@
       }else{
         $('.password').attr('type','password');
       }
-    });
-    $(document).ready(function() {
-      $('#id_cabang').change(function(){ 
-      var id_cabang=$(this).val();
-      $.ajax({
-        url : "<?php echo site_url('data/get_leasing');?>",
-        method : "POST",
-        data : {id_cabang: id_cabang},
-        async : true,
-        dataType : 'json',
-        success: function(data){
-          var html = '';
-          var i;
-          for(i=0; i<data.length; i++){
-            html += '<option value='+data[i].id_leasing+'>'+data[i].leasing+'</option>';
-          }
-          $('#id_leasing').html(html);
-        }
-      });
-      });
-      return false;
     });
     </script>
 	

@@ -11,7 +11,6 @@ class Admin extends CI_Model {
 	function get_all($table)
 	{
 		$this->db->from($table);
-
 		return $this->db->get();
 	}
 
@@ -19,7 +18,6 @@ class Admin extends CI_Model {
 	{
 		$this->db->from($table);
 		$this->db->where($where);
-
 		return $this->db->get();
     }
 
@@ -36,7 +34,6 @@ class Admin extends CI_Model {
 	{
 		$this->db->select($select);
 		$this->db->from($table);
-
 		return $this->db->get();
 	}
 
@@ -45,7 +42,6 @@ class Admin extends CI_Model {
 		$this->db->select($select);
 		$this->db->from($table);
 		$this->db->where($where);
-
 		return $this->db->get();
 	}
 	function update($table = null, $data = null, $where = null)
@@ -65,7 +61,6 @@ class Admin extends CI_Model {
 	{
 		$this->db->from($table);
 		$this->db->where($where);
-
 		return $this->db->count_all_results();
 	}
 	function last($table, $limit, $order)
@@ -73,86 +68,17 @@ class Admin extends CI_Model {
 		$this->db->from($table);
 		$this->db->limit($limit);
 		$this->db->order_by($order, 'DESC');
-
 		return $this->db->get();
 	}
 	function group_by($table='', $order='')
 	{
 		$this->db->from($table);
 		$this->db->group_by($order);
-
 		return $this->db->get();
 	}
 	function replace($table = null, $data = null, $where = null)
 	{
 		$this->db->replace($table, $data, $where);
-	}
-
-    function data_kendaraan()
-	{
-		$columns = '`ID` AS id,
-					`NO_POL` AS plat,
-                    `UNIT` AS model,
-                    `WARNA`AS warna,
-                    `LEASING` AS leasing,
-                    `CABANG` AS cabang,
-                    `NO_RANGKA` AS no_rangka,
-                    `NO_MESIN` AS no_mesin,
-                    `KONSUMEN` AS pemilik,
-                    `SISA_HUTANG` AS sisa_hutang,
-                    `OD` AS overdue,
-                    `INPUT_DATA` AS ket_data_masuk,
-                    `CATATAN` AS catatan';
-		$this->db->select($columns, FALSE);
-
-		$this->db->from('tbl_kendaraan');
-
-		return $this->db->get();
-	}
-	function data_kendaraan1()
-	{
-		$columns = '`ID` AS id,
-					`NO_POL` AS plat,
-                    `UNIT` AS model,
-                    `WARNA`AS warna,
-                    `LEASING` AS leasing,
-                    `CABANG` AS cabang,
-                    `NO_RANGKA` AS no_rangka,
-                    `NO_MESIN` AS no_mesin,
-                    `KONSUMEN` AS pemilik,
-                    `SISA_HUTANG` AS sisa_hutang,
-                    `OD` AS overdue,
-                    `INPUT_DATA` AS ket_data_masuk,
-                    `CATATAN` AS catatan';
-		$this->db->select($columns, FALSE);
-
-		$this->db->from('tbl_kendaraan');
-
-		return $this->db->get();
-	}
-    
-	public function importData($data)
-	{
-
-        $qwery = $this->db->insert_batch('tbl_kendaraan_temp',$data);
-        if ($qwery){
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    
-	}
-    
-	public function importDuplikat($data)
-	{
-
-        $qwery = $this->db->insert_batch('tbl_kendaraan_temp',$data);
-        if ($qwery){
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    
 	}
 	
 	function login($where = '')

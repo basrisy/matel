@@ -25,47 +25,23 @@ class Data extends CI_Controller {
 	public function kendaraan()
 	{
 		$this->cek_login();
-		// $data['kendaraan'] = $this->m_kendaraan->data_kendaraan();
-		$data['admin'] = $this->session->userdata('id');
+		$data['admin'] = $this->session->userdata('id_level');
 		$this->template->admin('admin/data/data_kendaraan', $data);
 	}
-	public function hapus_kendaraan()
+	public function hapus_kendaraan($id=null)
     {
-		$this->cek_login();
-		$id = $this->uri->segment(3);
-		$this->admin->delete(['tbl_kendaraan'], ['id' => $id]);
-		$this->session->set_flashdata('success', '<i class="icon fa fa-frown-o"></i>  Data Berhasil Dihapus');
-		redirect('data/kendaraan');
-
-        // $id = $this->input->post('id',TRUE);
-		// $pass = $this->input->post('password_admin',TRUE);
-		// if ($this->input->post('submit', TRUE) == 'Submit')
-        // {
-        //     $this->form_validation->set_rules('password_admin', 'Password Admin', "required");
-
-        //     if ($this->form_validation->run() == TRUE)
-        //     {
-        //         $get_data = $this->admin->get_where('tbl_administrator',['id_level' => 1])->row();
-
-        //         if (md5($pass) == $get_data->password)
-        //         {
-		// 			$this->admin->delete('tbl_kendaraan', array('id' => $id));
-		// 			$this->session->set_flashdata('success', '<i class="icon fa fa-frown-o"></i>  Data Berhasil Dihapus');
-        //             redirect('data/data_kendaraan');
-        //         } else {
-        //             $this->session->set_flashdata('warning', '<i class="icon fa fa-smile-o"></i>  <strong>Maaf..</strong> Password yang anda masukan salah');
-        //             redirect('data/data_kendaraan');
-        //         }
-        //     } else {
-        //         $this->session->set_flashdata('danger', '<i class="icon fa fa-warning"></i> Masukkan Password <strong>admin</strong> untuk menghapus data.');
-        //         redirect('data/data_kendaraan');
-        //     }
-        // }		
-	}
+        if (!isset($id)) show_404();
+        
+        if ($this->m_kendaraan->delete($id)) {
+			$this->session->set_flashdata('success', '<i class="icon fa fa-frown-o"></i>  Data Berhasil Dihapus');
+            redirect(site_url('data/kendaraan'));
+        }
+    }
 	public function import()
     {
 		$this->cek_login();
-		$this->template->admin('admin/data/import');
+		$data['file'] = $this->m_kendaraan->getAll_temp();
+		$this->template->admin('admin/data/import', $data);
 	}
 	public function preview()
     {
@@ -90,11 +66,10 @@ class Data extends CI_Controller {
 			if(empty($error)){
 				if (!empty($data['upload_data']['file_name'])) {
 					$import_xls_file = $data['upload_data']['file_name'];
-					$this->session->set_userdata('file_name', time());
 				} else {
 					$import_xls_file = 0;
 				}
-				$inputFileName = $path . $this->session->userdata('file_name');
+				$inputFileName = $path.$import_xls_file;
 			
 			try {
 				$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
@@ -112,7 +87,6 @@ class Data extends CI_Controller {
 						$flag = false;
 						continue;
 					}
-					$inserdata[$i]['`FILE_NAME`'] = time();
 					$inserdata[$i]['`KONSUMEN`'] = $value['A'];
 					$inserdata[$i]['`UNIT`'] = $value['B'];
 					$inserdata[$i]['`NO_RANGKA`'] = $value['C'];
@@ -131,14 +105,13 @@ class Data extends CI_Controller {
 				}
 											
 				if (empty($i)){
-					unlink($inputFileName);  
-					$this->session->unset_userdata('file_name');
+					unlink($inputFileName);
 					$this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Data Kosong...');
 					redirect('data/import');
 				} else {
-					$this->admin->importData($inserdata);
+					$this->m_kendaraan->importData($inserdata);
 									
-					unlink($inputFileName);  
+					unlink($inputFileName);
 					$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
 					redirect('data/preview2');
 				}
@@ -148,8 +121,8 @@ class Data extends CI_Controller {
 	public function preview2()
     {
 		$this->cek_login();
-		$data['file_name'] = $this->session->userdata('file_name');
-		$data['data_temp'] = $this->m_kendaraan->data_kendaraan_temp();
+		$data['data_temp'] = $this->m_kendaraan->getAll_temp();
+		$data['data_sama'] = $this->m_kendaraan->data_kendaraan_sama();
 		$data['ttl_sama'] = $this->m_kendaraan->count_kendaraan_sama();
 		$this->template->admin('admin/data/preview', $data);
 	}
@@ -175,11 +148,9 @@ class Data extends CI_Controller {
 				'CABANG' => $key->CABANG,
 				'USER_SYNCHRONE' => " ",
 			);
-			$this->admin->insert('tbl_kendaraan', $data);
+			$this->m_kendaraan->insert_file($data);
 		}
-		
-		$this->session->unset_userdata('file_name');
-		$this->m_kendaraan->truncate_table();
+		$this->m_kendaraan->truncate_table_temp();
 		$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
 		redirect('data/import');
 	}
@@ -205,10 +176,10 @@ class Data extends CI_Controller {
 				'CABANG' => $key->CABANG,
 				'USER_SYNCHRONE' => " ",
 			);
-			$this->admin->insert('tbl_kendaraan', $data);
+			$this->m_kendaraan->insert_file($data);
 		}
-		$file = $this->admin->get_all('tbl_kendaraan_temp');
-		foreach($file->result() as $key)
+		$file = $this->m_kendaraan->getAll_temp;
+		foreach($file as $key)
 		{
 			$data = array(
 				'KONSUMEN' => $key->KONSUMEN,
@@ -228,19 +199,15 @@ class Data extends CI_Controller {
 			);
 			$this->m_kendaraan->saveReplace($data);
 		}
-		
-		$this->session->unset_userdata('file_name');
-		$this->m_kendaraan->truncate_table();
+		$this->m_kendaraan->truncate_table_temp();
 		$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
 		redirect('data/import');
 	}
 	function batal()
 	{   
-		$this->session->unset_userdata('file_name');
-		$this->m_kendaraan->truncate_table();
+		$this->m_kendaraan->truncate_table_temp();
 		redirect('data/import');
 	}
-	 
     function get_data_kendaraan()
     {
         $list = $this->m_kendaraan->get_datatables();
@@ -261,11 +228,8 @@ class Data extends CI_Controller {
             $row[] = $field->LEASING;
             $row[] = $field->CABANG;
             $row[] = $field->INPUT_DATA;
-            $row[] = $field->CATATAN;
-			
+            $row[] = $field->CATATAN;			
             $row[] = '<a href="hapus_kendaraan/'.$field->ID.'" class="btn btn-sm btn-danger" title="Hapus"><i class="fa fa-trash"></i> Hapus Data Ini</a>';
-            // $row[] = $field->TAHUN;
-            // $row[] = $field->BULAN_UPDATE;
  
             $data[] = $row;
         }

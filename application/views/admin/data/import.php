@@ -27,7 +27,7 @@
         <a href="<?=base_url();?>assets/file/DATA KENDARAAN - One Matel Indonesia.xlsx" class="btn btn-dark" title="Download File"><i class="glyphicon glyphicon-download-alt"></i> Download File</a>
         <div class="ln_solid"></div>
         <form method="post" action="<?php echo base_url("data/preview"); ?>" enctype="multipart/form-data">        
-        <?php if($this->session->userdata('file_name')){ ?>
+        <?php if(!empty($file)){ ?>
             <p>Terdapat File Import yang belum selesai..!</p>
             <a data-toggle="modal" data-target="#cekFileImport" class="btn btn-info btn-block" title="Cek File Import"><i class="fa fa-check"></i> Cek File Import</a>
         <?php } else { ?>

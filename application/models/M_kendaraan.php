@@ -7,7 +7,8 @@ class M_kendaraan extends CI_Model {
         parent::__construct();
     }
 
-    private $_table = "tbl_kendaraan";
+    private $_table = "tbl_kendaraan_1";
+    private $_tableTemp = "tbl_kendaraan_temp";
 
     public $id;
 
@@ -32,6 +33,10 @@ class M_kendaraan extends CI_Model {
     {
         return $this->db->get($this->_table)->result();
     }
+    public function getAll_temp()
+    {
+        return $this->db->get($this->_tableTemp)->result();
+    }
 
     function data_kendaraan()
     {
@@ -43,21 +48,21 @@ class M_kendaraan extends CI_Model {
     function data_kendaraan_temp()
 	{
         $this->db->from('tbl_kendaraan_temp as a');
-        $this->db->where('NOT EXISTS (SELECT * FROM tbl_kendaraan AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
+        $this->db->where('NOT EXISTS (SELECT * FROM tbl_kendaraan_1 AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
         return $this->db->get()->result();
     }
 
     function data_kendaraan_sama()
 	{
         $this->db->from('tbl_kendaraan_temp as a');
-        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
+        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan_1 AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
         return $this->db->get()->result();
     }
     
     function count_kendaraan_sama()
 	{
         $this->db->from('tbl_kendaraan_temp as a');
-        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
+        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan_1 AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
         return $this->db->count_all_results();
 	}
     
@@ -65,18 +70,27 @@ class M_kendaraan extends CI_Model {
     {
         return $this->db->get_where($this->_table, ["id" => $id])->row();
     }
-        
-	public function importData($data)
+    
+	public function delete($id)
+    {
+        return $this->db->delete($this->_table, array("id" => $id));
+    }    
+
+	function insert_file($data = '')
 	{
-        $qwery = $this->db->insert_batch($this->_table, $data);
-        if ($qwery) {
+		$this->db->insert($this->_table, $data);
+	}
+    
+    public function importData($data)
+	{
+        $qwery = $this->db->insert_batch($this->_tableTemp,$data);
+        if ($qwery){
             return TRUE;
         } else {
             return FALSE;
         }
-    
-    }
-    function truncate_table()
+	}
+    function truncate_table_temp()
     {
         $this->db->from('tbl_kendaraan_temp');
         $this->db->truncate();

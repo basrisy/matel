@@ -7,7 +7,7 @@ class M_kendaraan extends CI_Model {
         parent::__construct();
     }
 
-    private $_table = "tbl_kendaraan_1";
+    private $_table = "tbl_kendaraan";
     private $_tableTemp = "tbl_kendaraan_temp";
 
     public $id;
@@ -48,21 +48,21 @@ class M_kendaraan extends CI_Model {
     function data_kendaraan_temp()
 	{
         $this->db->from('tbl_kendaraan_temp as a');
-        $this->db->where('NOT EXISTS (SELECT * FROM tbl_kendaraan_1 AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
+        $this->db->where('NOT EXISTS (SELECT * FROM tbl_kendaraan AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
         return $this->db->get()->result();
     }
 
     function data_kendaraan_sama()
 	{
         $this->db->from('tbl_kendaraan_temp as a');
-        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan_1 AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
+        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
         return $this->db->get()->result();
     }
     
     function count_kendaraan_sama()
 	{
         $this->db->from('tbl_kendaraan_temp as a');
-        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan_1 AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
+        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
         return $this->db->count_all_results();
 	}
     

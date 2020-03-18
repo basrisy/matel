@@ -62,12 +62,13 @@
             </table>
             <p>Data Sama : <?= $ttl_sama-$kosong; ?></p>
             <p>Data Tidak Lengkap : <?= $kosong; ?></p>
-            <?php if($kosong <= 0 ){ ?>
-                <p style='color: red;' >Note : Data UNIT, NO.POLISI dan LEASING harus terisi.</p>
+            <?php if($kosong < 1 ){ ?>
                 <div class="ln_solid"></div>
                 <a href="<?=base_url();?>data/importFile" class="btn btn-primary" title="Insert data"><i class="glyphicon glyphicon-import"></i> Insert</a>
                 <a href="<?=base_url();?>data/importFileUpdate" class="btn btn-success" title="Insert dan Update data"><i class="glyphicon glyphicon-save-file"></i> Insert/Update</a>
-            <?php } ?>
+            <?php } else { ?>                
+                <p style='color: red;' >Note : Data UNIT/MODEL, NO.POLISI/PLAT dan LEASING harus terisi.</p>
+            <?php }?>
         </form>
     </div>
 </div>

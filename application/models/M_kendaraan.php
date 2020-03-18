@@ -55,14 +55,14 @@ class M_kendaraan extends CI_Model {
     function data_kendaraan_sama()
 	{
         $this->db->from('tbl_kendaraan_temp as a');
-        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
+        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING AND DATE_FORMAT(b.UPDATE_AT, "%Y-%m") = DATE_FORMAT(a.UPDATE_AT, "%Y-%m"))', '', FALSE);
         return $this->db->get()->result();
     }
     
     function count_kendaraan_sama()
 	{
         $this->db->from('tbl_kendaraan_temp as a');
-        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING)', '', FALSE);
+        $this->db->where('EXISTS (SELECT * FROM tbl_kendaraan AS b  WHERE b.NO_POL = a.NO_POL AND b.LEASING = a.LEASING AND DATE_FORMAT(b.UPDATE_AT, "%Y-%m") = DATE_FORMAT(a.UPDATE_AT, "%Y-%m"))', '', FALSE);
         return $this->db->count_all_results();
 	}
     

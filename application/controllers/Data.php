@@ -87,6 +87,9 @@ class Data extends CI_Controller {
 						$flag = false;
 						continue;
 					}
+					if($value['A']=="" && $value['B']=="" && $value['C']=="" && $value['D']=="" && $value['E']=="" && $value['F']=="" && $value['G']=="" && $value['H']=="" && $value['I']=="" && $value['J']=="" && $value['K']=="" && $value['L']=="" && $value['M']=="")
+					continue;
+					
 					$inserdata[$i]['`KONSUMEN`'] = $value['A'];
 					$inserdata[$i]['`UNIT`'] = $value['B'];
 					$inserdata[$i]['`NO_RANGKA`'] = $value['C'];

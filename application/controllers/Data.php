@@ -26,6 +26,8 @@ class Data extends CI_Controller {
 	{
 		$this->cek_login();
 		$data['admin'] = $this->session->userdata('id_level');
+		$data['leasing'] = $this->m_kendaraan->data_leasing();
+		$data['cabang'] = $this->m_kendaraan->data_cabang();
 		$this->template->admin('admin/data/data_kendaraan', $data);
 	}
 	public function hapus_kendaraan($id=null)
@@ -125,7 +127,6 @@ class Data extends CI_Controller {
     {
 		$this->cek_login();
 		$data_temp = $this->m_kendaraan->getAll_temp();
-		$data['data_sama'] = $this->m_kendaraan->data_kendaraan_sama();
 		$data['ttl_sama'] = $this->m_kendaraan->count_kendaraan_sama();		
 		$kosong = 0;
 		foreach ($data_temp as $key) {
@@ -229,17 +230,17 @@ class Data extends CI_Controller {
         foreach ($list as $field) {
             $no++;
             $row = array();
-            $row[] = $no;
+            // $row[] = $no;
+            $row[] = $field->LEASING;
+            $row[] = $field->CABANG;
+            $row[] = $field->KONSUMEN;
             $row[] = $field->NO_POL;
             $row[] = $field->UNIT;
 			$row[] = $field->WARNA;
-            $row[] = $field->KONSUMEN;
             $row[] = $field->SISA_HUTANG;
             $row[] = $field->OD;
             $row[] = $field->NO_RANGKA;
             $row[] = $field->NO_MESIN;
-            $row[] = $field->LEASING;
-            $row[] = $field->CABANG;
             $row[] = $field->INPUT_DATA;
             $row[] = $field->CATATAN;			
             $row[] = '<a href="hapus_kendaraan/'.$field->ID.'" class="btn btn-sm btn-danger" title="Hapus"><i class="fa fa-trash"></i> Hapus Data Ini</a>';

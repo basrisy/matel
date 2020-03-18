@@ -27,17 +27,17 @@
         <table id="table" class="dt-responsive row-border nowrap display" style="width:100%">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <!-- <th>#</th> -->
+                    <th>LEASING</th>
+                    <th>CABANG</th>
+                    <th>PEMILIK</th>
                     <th>PLAT</th>
                     <th>MODEL</th>
                     <th>WARNA</th>
-                    <th>PEMILIK</th>
                     <th>SISA HUTANG</th>
                     <th>OVERDUE</th>
                     <th>NO RANGKA</th>                    
                     <th>NO MESIN</th>
-                    <th>LEASING</th>
-                    <th>CABANG</th>
                     <th>KET. DATA MASUK</th>
                     <th>CATATAN</th>
                     <?php if($admin == "1"){ echo "<th>OPSI</th>"; } ?>                    

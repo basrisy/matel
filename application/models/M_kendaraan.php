@@ -43,6 +43,20 @@ class M_kendaraan extends CI_Model {
 		$this->db->from('tbl_kendaraan');
 
 		return $this->db->get()->result();
+    }
+    function data_leasing()
+    {
+		$this->db->select('LEASING');
+		$this->db->from('tbl_kendaraan');
+		$this->db->group_by('LEASING');
+		return $this->db->get()->result();
+	}
+    function data_cabang()
+    {
+		$this->db->select('CABANG');
+		$this->db->from('tbl_kendaraan');
+		$this->db->group_by('CABANG');
+		return $this->db->get()->result();
 	}
 
     function data_kendaraan_temp()

@@ -18,6 +18,8 @@
     <link href="<?php echo base_url(); ?>assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <!-- bootstrap datepicker -->
     <link href="<?php echo base_url(); ?>assets/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="<?php echo base_url(); ?>assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- Datatables -->
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/css/buttons.bootstrap.min.css" rel="stylesheet">
@@ -44,7 +46,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            One Matel Indonesia - ©2020 All Rights Reserved. <a href="#">v.202003.004</a>
+            One Matel Indonesia - ©2020 All Rights Reserved. <a href="#">v.202003.006</a>
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -64,6 +66,8 @@
     <script src="<?php echo base_url(); ?>assets/vendors/ckeditor/ckeditor.js"></script>
     <!-- bootstrap datepicker -->
     <script src="<?php echo base_url(); ?>assets/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="<?php echo base_url(); ?>assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
     <!-- Datatables -->
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
@@ -87,29 +91,25 @@
       //datatables
       var table = $('#table').DataTable({ 
         lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+        fixedHeader: true,
         processing: true, 
         serverSide: true, 
+        ordering: false,
         order: [], 
           
         ajax: {
           url: "<?php echo site_url('data/get_data_kendaraan')?>",
           type: "POST"
-        },          
-        columnDefs: [
-          { 
-            targets: [ 0 ], 
-            orderable: false, 
-          },
-        ],
+        },
         language: {
           url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Indonesian.json"
         },
-        fixedHeader: true
       });
       
       //datatables temp/preview
       var table = $('#preview').DataTable({ 
         lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+        fixedHeader: true,
         processing: true, 
         serverSide: true, 
         order: [], 
@@ -126,10 +126,8 @@
         ],
         language: {
           url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Indonesian.json"
-        },
-        fixedHeader: true
+        }
       });
-
       $('#tabledata').dataTable( {
           lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
           processing: true,

@@ -94,9 +94,30 @@
         ajax: {
           url: "<?php echo site_url('data/get_data_kendaraan')?>",
           type: "POST"
+        },          
+        columnDefs: [
+          { 
+            targets: [ 0 ], 
+            orderable: false, 
+          },
+        ],
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Indonesian.json"
         },
-
+        fixedHeader: true
+      });
+      
+      //datatables temp/preview
+      var table = $('#preview').DataTable({ 
+        lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+        processing: true, 
+        serverSide: true, 
+        order: [], 
           
+        ajax: {
+          url: "<?php echo site_url('data/preview_import')?>",
+          type: "POST"
+        },          
         columnDefs: [
           { 
             targets: [ 0 ], 

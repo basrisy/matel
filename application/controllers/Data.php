@@ -124,9 +124,19 @@ class Data extends CI_Controller {
 	public function preview2()
     {
 		$this->cek_login();
-		$data['data_temp'] = $this->m_kendaraan->getAll_temp();
+		$data_temp = $this->m_kendaraan->getAll_temp();
 		$data['data_sama'] = $this->m_kendaraan->data_kendaraan_sama();
-		$data['ttl_sama'] = $this->m_kendaraan->count_kendaraan_sama();
+		$data['ttl_sama'] = $this->m_kendaraan->count_kendaraan_sama();		
+		$kosong = 0;
+		foreach ($data_temp as $key) {
+			$unit = ($key->UNIT)? "" : " style='background: #EABBB0;'";
+			$no_pol = ($key->NO_POL)? "" : " style='background: #EABBB0;'";
+			$leasing = ($key->LEASING)? "" : " style='background: #EABBB0;'";
+			if($unit || $no_pol || $leasing){
+				$kosong++;
+			}
+		}
+		$data['kosong'] = $kosong;
 		$this->template->admin('admin/data/preview', $data);
 	}
 	public function importFile()
@@ -241,6 +251,42 @@ class Data extends CI_Controller {
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->m_kendaraan->count_all(),
             "recordsFiltered" => $this->m_kendaraan->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+	}
+	
+    function preview_import()
+    {
+        $list = $this->m_temp->get_datatables();
+        $data = array();
+		$no = $_POST['start'];
+        foreach ($list as $field) {
+
+            $no++;
+            $row = array();
+			$row[] = $no;
+            $row[] = $field->KONSUMEN;
+            $row[] = $field->UNIT;
+            $row[] = $field->NO_RANGKA;
+            $row[] = $field->NO_MESIN;
+            $row[] = $field->NO_POL;
+            $row[] = $field->LEASING;
+            $row[] = $field->CABANG;
+			$row[] = $field->WARNA;
+			$row[] = $field->WARNA;
+			$row[] = $field->BULAN_UPDATE;
+            $row[] = $field->OD;
+            $row[] = $field->SISA_HUTANG;
+            $row[] = $field->CATATAN;
+            $data[] = $row;
+        }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->m_temp->count_all(),
+            "recordsFiltered" => $this->m_temp->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON

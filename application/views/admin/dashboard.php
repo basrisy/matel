@@ -22,6 +22,7 @@
     <link href="<?php echo base_url(); ?>assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- Datatables -->
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/vendors/datatables/media/css/dataTables.checkboxes.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/extensions/FixedHeader/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet">
@@ -46,7 +47,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            One Matel Indonesia - ©2020 All Rights Reserved. <a href="#">v.202003.006</a>
+            One Matel Indonesia - ©2020 All Rights Reserved. <a href="#">v.202003.007</a>
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -70,6 +71,7 @@
     <script src="<?php echo base_url(); ?>assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
     <!-- Datatables -->
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/vendors/datatables/media/js/dataTables.checkboxes.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendors/datatables/extensions/Buttons/js/buttons.flash.min.js"></script>
@@ -95,19 +97,124 @@
         processing: true, 
         serverSide: true, 
         ordering: false,
-        order: [], 
+        // order: [], 
           
         ajax: {
           url: "<?php echo site_url('data/get_data_kendaraan')?>",
-          type: "POST"
+          type: "POST",
+          data: function ( data ) {
+            data.leasing = $('#leasing').val();
+            data.cabang = $('#cabang').val();
+            data.update_at = $('#update_at').val();
+            data.request = 1;
+          }
         },
+        columnDefs: [
+          { 
+            targets: [ 0 ], //first column / numbering column
+            orderable: false //set not orderable
+            // checkboxes: {
+            //   selectRow: true
+            // }
+          },
+        ],
+        select: {
+          'style': 'multi'
+        },
+        order: [[1, 'asc']],
         language: {
           url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Indonesian.json"
         },
       });
+      //  Filter Custom
+      $('#btn-filter').click(function(){ //button filter event click
+        table.ajax.reload();  //just reload table
+      });
+      $('#btn-reset').click(function(){ //button reset event click
+        $('#form-filter')[0].reset();
+        table.ajax.reload();  //just reload table
+      });
+      
+      // Delete record
+      $('#btn-delete').click(function(){
+        var confirmdelete = confirm("Anda benar-benar ingin menghapus data ini?");
+        if (confirmdelete == true) {
+          $.ajax({            
+            url: "<?php echo site_url('data/get_data_kendaraan')?>",
+            type: "POST",
+            data:{
+              request : 2,
+              leasing : $('#leasing').val(),
+              cabang : $('#cabang').val(),
+              update_at : $('#update_at').val(),
+            },
+            success: function(response){
+              $('#form-filter')[0].reset();
+              table.ajax.reload();
+            }
+          });
+        } 
+      });
+
+      // Check all 
+      $('#checkall').click(function(){
+          if($(this).is(':checked')){
+            $('.delete_check').prop('checked', true);
+          }else{
+            $('.delete_check').prop('checked', false);
+          }
+      });
+      // Delete record
+      $('#delete_record').click(function(){
+
+        var deleteids_arr = [];
+        // Read all checked checkboxes
+        $("input:checkbox[class=delete_check]:checked").each(function () {
+          deleteids_arr.push($(this).val());
+        });
+
+        // Check checkbox checked or not
+        if(deleteids_arr.length > 0){
+
+          // Confirm alert
+          var confirmdelete = confirm("Anda benar-benar ingin menghapus data ini?");
+          if (confirmdelete == true) {
+            $.ajax({
+              url: '<?php echo site_url('data/get_data_kendaraan')?>',
+              type: 'POST',
+              data: {request: 3,deleteids_arr: deleteids_arr},
+              success: function(response){
+                table.ajax.reload();
+              }
+            });
+          } 
+        }
+      });
+      // Checkbox checked
+      function checkcheckbox(){
+
+        // Total checkboxes
+        var length = $('.delete_check').length;
+
+        // Total checked checkboxes
+        var totalchecked = 0;
+        $('.delete_check').each(function(){
+          if($(this).is(':checked')){
+              totalchecked+=1;
+          }
+        });
+
+        // Checked unchecked checkbox
+        if(totalchecked == length){
+          $("#checkall").prop('checked', true);
+        }else{
+          $('#checkall').prop('checked', false);
+        }
+      }
+
       
       //datatables temp/preview
-      var table = $('#preview').DataTable({ 
+      var tablePreview = $('#preview').DataTable({ 
         lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
         fixedHeader: true,
         processing: true, 

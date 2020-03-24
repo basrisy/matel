@@ -162,12 +162,12 @@ class User extends CI_Controller {
 			'status_aktif' => 2,
 		);
 		$this->admin->update('tbl_user', $data, array('id'=> $id));
-			if($this->db->affected_rows() > 0)
-			{   
-				activity_log("Blokir User", $nama, $lev->tipe, $lev->tipe, $tgl_akhir);
-				$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  User Berhasil Diblokir');
-				redirect('user/data_user');
-			}
+		if($this->db->affected_rows() > 0)
+		{   
+			activity_log("Blokir User", $nama, $lev->tipe, $lev->tipe, $tgl_akhir);
+			$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  User Berhasil Diblokir');
+			redirect('user/data_user');
+		}
 	}
     public function tolak_user()
     {

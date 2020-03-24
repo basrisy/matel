@@ -26,8 +26,27 @@ class Data extends CI_Controller {
 	{
 		$this->cek_login();
 		$data['admin'] = $this->session->userdata('id_level');
-		$data['leasing'] = $this->m_kendaraan->data_leasing();
-		$data['cabang'] = $this->m_kendaraan->data_cabang();
+
+		$leasing = $this->m_kendaraan->get_list_leasing(); 
+        $opt = array('' => 'Semua Leasing');
+        foreach ($leasing as $leasing) {
+            $opt[$leasing] = $leasing;
+        } 
+		$data['form_leasing'] = form_dropdown('',$opt,'','id="leasing" class="form-control"');
+		
+		$cabang = $this->m_kendaraan->get_list_cabang(); 
+        $opta = array('' => 'Semua Cabang');
+        foreach ($cabang as $cabang) {
+            $opta[$cabang] = $cabang;
+        } 
+		$data['form_cabang'] = form_dropdown('',$opta,'','id="cabang" class="form-control"');
+		
+		$update = $this->m_kendaraan->get_tgl_update(); 
+        $optb = array('' => 'Semua Tanggal');
+        foreach ($update as $update) {
+            $optb[$update] = $update;
+        } 
+        $data['form_update'] = form_dropdown('',$optb,'','id="update_at" class="form-control"');
 		$this->template->admin('admin/data/data_kendaraan', $data);
 	}
 	public function hapus_kendaraan($id=null)
@@ -229,8 +248,11 @@ class Data extends CI_Controller {
         $no = $_POST['start'];
         foreach ($list as $field) {
             $no++;
-            $row = array();
-            // $row[] = $no;
+			$row = array();
+			$row[] = "";
+			// $row[] = '<input type="checkbox" name="id[]" class="chk_boxes1" value="'.$field->ID.'">';
+			$row[] = "<input type='checkbox' class='delete_check' id='delcheck_".$field->ID."' onclick='checkcheckbox();' value='".$field->ID."'>";
+            $row[] = $field->BULAN_UPDATE;
             $row[] = $field->LEASING;
             $row[] = $field->CABANG;
             $row[] = $field->KONSUMEN;

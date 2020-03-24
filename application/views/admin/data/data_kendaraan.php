@@ -24,10 +24,37 @@
                 echo '</div>';
             } ?>
         </div>
-        <table id="table" class="dt-responsive row-border nowrap display" style="width:100%">
+        <form id="form-filter" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-3 columns">
+                    <label for="update_at">Tanggal</label>
+                    <?php echo $form_update; ?>
+                </div>
+                <div class="col-md-2 columns">
+                    <label for="leasing">Leasing</label>
+                    <?php echo $form_leasing; ?>
+                </div>
+                <div class="col-md-2 columns">
+                    <label for="cabang">Cabang</label>
+                    <?php echo $form_cabang; ?>
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-md-12 columns">
+                    <button type="button" id="btn-filter" class="btn btn-primary"><i class="fa fa-search"></i> Cari</button>
+                    <button type="button" id="btn-delete" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus Data Filter</button>
+                    <button type="button" id="btn-reset" class="btn btn-default"><i class="fa fa-history"></i> Refresh</button>
+                    <input type="button" id='delete_record' value='Hapus Data Cheklist' class="btn btn-dark pull-right">
+                </div>
+            </div><br />
+        </form>
+        <table id="table" class="dt-responsive row-border nowrap display" cellspacing="0"  style="width:100%">
             <thead>
                 <tr>
-                    <!-- <th>#</th> -->
+                    <!-- <th><input type="checkbox" class="form-control check_all"/></th> -->
+                    <th></th>
+                    <th><input type="checkbox" class='checkall' id='checkall'></th>
+                    <th>TGL UPDATE</th>
                     <th>LEASING</th>
                     <th>CABANG</th>
                     <th>PEMILIK</th>

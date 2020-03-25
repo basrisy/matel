@@ -10,7 +10,7 @@
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
-                    <input id="tgl_mulai" placeholder="Dari Tanggal" type="text" class="form-control" name="tgl_mulai">
+                    <input id="tgl_mulai" placeholder="Dari Tanggal" type="text" class="form-control" name="tgl_mulai" value="<?= $tgl_mulai;?>">
                 </div>
             </div>
             <div class="col-md-3">
@@ -18,7 +18,7 @@
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
-                    <input id="tgl_akhir" placeholder="Sampai Tanggal" type="text" class="form-control " name="tgl_akhir">
+                    <input id="tgl_akhir" placeholder="Sampai Tanggal" type="text" class="form-control " name="tgl_akhir" value="<?= $tgl_akhir;?>">
                 </div>
             </div>
             <div class="col-md-4">

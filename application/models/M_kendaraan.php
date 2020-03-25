@@ -136,7 +136,7 @@ class M_kendaraan extends CI_Model {
     }
 
     // SERVER-SIDE
-    var $table = 'tbl_kendaraan_copy1'; //nama tabel dari database
+    var $table = 'tbl_kendaraan'; //nama tabel dari database
     var $column_order = array(null, 'ID', 'LEASING', 'CABANG', 'KONSUMEN', 'UNIT', 'NO_RANGKA', 'NO_MESIN', 'NO_POL', 'OD', 'WARNA', 'TAHUN', 'BULAN_UPDATE', 'CATATAN', 'INPUT_DATA', 'SISA_HUTANG'); //field yang ada di table user
     var $column_search = array('LEASING', 'CABANG', 'KONSUMEN', 'UNIT', 'NO_RANGKA', 'NO_MESIN', 'NO_POL', 'OD', 'WARNA', 'TAHUN', 'BULAN_UPDATE', 'CATATAN', 'INPUT_DATA', 'SISA_HUTANG'); //field yang diizin untuk pencarian 
     var $order = array('ID' => 'asc'); // default order 

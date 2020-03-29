@@ -35,7 +35,7 @@ class Administrator extends CI_Controller {
 			$data['agent'] = 'Data user gagal di dapatkan';
         }
         
-        $data['data'] = $this->admin->get_all('tbl_administrator');
+        $data['data'] = $this->admin->admin();
         $data['level'] = $this->admin->get_all('tbl_leveladmin');
         $this->template->admin('admin/admin/administrator', $data);
     }

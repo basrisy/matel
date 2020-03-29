@@ -270,21 +270,21 @@ class M_kendaraan extends CI_Model {
         return $leasing;
     }
 
-    public function get_list_cabang()
+    public function get_list_cabang($leasing)
     {
+        
         $this->db->select('CABANG');
         $this->db->from($this->table);
-        $this->db->order_by('CABANG','asc');
+        $this->db->where('LEASING', $leasing);
+        $this->db->order_by('CABANG', 'ASC');
         $this->db->group_by('CABANG');
         $query = $this->db->get();
-        $result = $query->result();
- 
-        $cabang = array();
-        foreach ($result as $row) 
+        $output = '<option value="">Semua Cabang</option>';
+        foreach($query->result() as $row)
         {
-            $cabang[] = $row->CABANG;
+        $output .= '<option value="'.$row->CABANG.'">'.$row->CABANG.'</option>';
         }
-        return $cabang;
+        return $output;
     }
 
     public function get_tgl_update()

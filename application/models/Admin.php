@@ -121,4 +121,10 @@ class Admin extends CI_Model {
 
 		return $this->db->count_all_results();
 	}
+	function admin()
+	{
+		$this->db->from('tbl_administrator');
+		$this->db->where_not_in('id_level', '1');
+		return $this->db->get();
+	}
 }

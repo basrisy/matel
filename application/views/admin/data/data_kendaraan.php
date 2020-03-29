@@ -36,7 +36,9 @@
                 </div>
                 <div class="col-md-2 columns">
                     <label for="cabang">Cabang</label>
-                    <?php echo $form_cabang; ?>
+                    <select name="cabang" id="cabang" class="form-control">
+                        <option value="">Semua Cabang</option>
+                    </select>
                 </div>
             </div><br />
             <div class="row">

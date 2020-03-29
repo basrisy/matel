@@ -47,7 +47,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            One Matel Indonesia - ©2020 All Rights Reserved. <a href="#">v.202003.007</a>
+            One Matel Indonesia - ©2020 All Rights Reserved. <a href="#">v.202003.008</a>
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -126,6 +126,22 @@
           url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Indonesian.json"
         },
       });
+      $('#leasing').change(function(){
+        var leasing = $('#leasing').val();
+        if(leasing != ''){
+          $.ajax({
+            url:"<?php echo base_url(); ?>data/get_cabang",
+            method:"POST",
+            data:{leasing:leasing},
+            success:function(data){
+              $('#cabang').html(data);
+            }
+          });
+        } else {
+          $('#cabang').html('<option value="">Semua Cabang</option>');
+        }
+      });
+
       //  Filter Custom
       $('#btn-filter').click(function(){ //button filter event click
         table.ajax.reload();  //just reload table
@@ -135,7 +151,7 @@
         table.ajax.reload();  //just reload table
       });
       
-      // Delete record
+      // Delete filter
       $('#btn-delete').click(function(){
         var confirmdelete = confirm("Anda benar-benar ingin menghapus data ini?");
         if (confirmdelete == true) {
@@ -211,7 +227,6 @@
           $('#checkall').prop('checked', false);
         }
       }
-
       
       //datatables temp/preview
       var tablePreview = $('#preview').DataTable({ 

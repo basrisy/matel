@@ -32,15 +32,8 @@ class Data extends CI_Controller {
         foreach ($leasing as $leasing) {
             $opt[$leasing] = $leasing;
         } 
-		$data['form_leasing'] = form_dropdown('',$opt,'','id="leasing" class="form-control"');
-		
-		$cabang = $this->m_kendaraan->get_list_cabang(); 
-        $opta = array('' => 'Semua Cabang');
-        foreach ($cabang as $cabang) {
-            $opta[$cabang] = $cabang;
-        } 
-		$data['form_cabang'] = form_dropdown('',$opta,'','id="cabang" class="form-control"');
-		
+		$data['form_leasing'] = form_dropdown('',$opt,'','id="leasing" name="leasing" class="form-control"');		
+				
 		$update = $this->m_kendaraan->get_tgl_update(); 
         $optb = array('' => 'Semua Tanggal');
         foreach ($update as $update) {
@@ -108,7 +101,7 @@ class Data extends CI_Controller {
 						$flag = false;
 						continue;
 					}
-					if($value['A']=="" && $value['B']=="" && $value['C']=="" && $value['D']=="" && $value['E']=="" && $value['F']=="" && $value['G']=="" && $value['H']=="" && $value['I']=="" && $value['J']=="" && $value['K']=="" && $value['L']=="" && $value['M']=="")
+					if($value['A']=="" && $value['B']=="" && $value['C']=="" && $value['D']=="" && $value['E']=="" && $value['F']=="" && $value['G']=="" && $value['H']=="" && $value['I']=="" && $value['J']=="" && $value['K']=="" && $value['L']=="")
 					continue;
 					
 					$inserdata[$i]['`KONSUMEN`'] = $value['A'];
@@ -119,11 +112,11 @@ class Data extends CI_Controller {
 					$inserdata[$i]['`OD`'] = $value['F'];
 					$inserdata[$i]['`WARNA`'] = $value['G'];
 					$inserdata[$i]['`TAHUN`'] = $value['H'];
-					$inserdata[$i]['`BULAN_UPDATE`'] = $value['I'];
-					$inserdata[$i]['`CATATAN`'] = $value['J'];
-					$inserdata[$i]['`SISA_HUTANG`'] = $value['K'];
-					$inserdata[$i]['`LEASING`'] = $value['L'];
-					$inserdata[$i]['`CABANG`'] = $value['M'];
+					$inserdata[$i]['`BULAN_UPDATE`'] = DATE("Y-m-d");
+					$inserdata[$i]['`CATATAN`'] = $value['I'];
+					$inserdata[$i]['`SISA_HUTANG`'] = $value['J'];
+					$inserdata[$i]['`LEASING`'] = $value['K'];
+					$inserdata[$i]['`CABANG`'] = $value['L'];
 					$inserdata[$i]['`USER_SYNCHRONE`'] = " ";
 					$i++;
 				}
@@ -315,4 +308,12 @@ class Data extends CI_Controller {
         //output dalam format JSON
         echo json_encode($output);
 	}
+	 
+	function get_cabang()
+	{
+		if($this->input->post('leasing'))
+		{
+			echo $this->m_kendaraan->get_list_cabang($this->input->post('leasing'));
+		}
+    }
 }

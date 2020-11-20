@@ -30,11 +30,11 @@
                     <label for="update_at">Tanggal</label>
                     <?php echo $form_update; ?>
                 </div>
-                <div class="col-md-2 columns">
+                <div class="col-md-3 columns">
                     <label for="leasing">Leasing</label>
                     <?php echo $form_leasing; ?>
                 </div>
-                <div class="col-md-2 columns">
+                <div class="col-md-3 columns">
                     <label for="cabang">Cabang</label>
                     <select name="cabang" id="cabang" class="form-control">
                         <option value="">Semua Cabang</option>

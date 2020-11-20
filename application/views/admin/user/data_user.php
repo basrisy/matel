@@ -56,8 +56,9 @@
                     <td><?php if ($sisahari < 0) { echo "0 Hari"; } else { echo number_format($sisahari)." Hari"; }?></td>     
                     <td><?php if($key->status_aktif == 0 && $sisahari > 0) { echo "Aktif";} else if($key->status_aktif == 0 && $masaaktif < $sekarang) { echo "<a style='color: red;'>Habis Masa Aktif</a>";} else { echo "Tidak Aktif";} ?></td>
                     <td>
-                        <a data-toggle="modal" data-target="#perpanjang<?=$key->id;?>" style="width: 70px" class="btn btn-xs btn-dark" title="Perbarui Masa Aktif"><i class="fa fa-clock-o"></i> Perbarui</a>
-                        <a href="<?=base_url();?>user/blokir/<?=$key->id;?>" style="width: 70px" class="btn btn-xs btn-dark" title="Blokir User"><i class="fa fa-lock"></i> Blokir</a>
+                        <a data-toggle="modal" data-target="#perpanjang<?=$key->id;?>" style="width: 40px" class="btn btn-xs btn-dark" title="Perbarui Masa Aktif"><i class="fa fa-clock-o"></i></a>
+                        <a data-toggle="modal" data-target="#password<?=$key->id;?>" style="width: 40px" class="btn btn-xs btn-dark" title="Update Password"><i class="fa fa-key"></i></a>
+                        <a href="<?=base_url();?>user/blokir/<?=$key->id;?>" style="width: 40px" class="btn btn-xs btn-danger" title="Blokir User"><i class="fa fa-ban"></i></a>
                     </td>
                     <td><?= date('d-m-Y h:i:s A', strtotime($key->terdaftar_pada)); ?></td>
                     <td><?= date('d-m-Y h:i:s A', strtotime($key->berakhir_pada)); ?></td>
@@ -126,6 +127,60 @@
                                 </span>
                                 <input type='text' name="tgl_akhir" class="form-control" value="<?= date('Y-m-d', strtotime($key->berakhir_pada)); ?>"/>
                             </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-info" name="submit" value="Submit" type="submit"> Simpan&nbsp;</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal"> Batal</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>
+
+<!-- modal password -->
+<?php foreach($data->result() AS $key): 
+    $masaaktif = $key->berakhir_pada;
+    $sekarang = date('d-m-Y h:i:s A');
+    $masaberlaku = strtotime($masaaktif) - strtotime($sekarang);
+    $sisahari = $masaberlaku/(24*60*60);
+?>
+<div id="password<?=$key->id;?>" class="modal fade" data-backdrop="false" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered"  role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Update Password</h4>
+            <div class="clearfix"></div>
+        </div>
+        <form class="form-horizontal" action="<?php echo base_url('user/update_password')?>" method="post" enctype="multipart/form-data" role="form">
+            <div class="modal-body">
+                <input type="hidden" name="id" value="<?= $key->id; ?>">
+                <table class="table table-striped">
+                    <tr>
+                        <td style="width: 150px">Nama</td>
+                        <td>: <?= $key->nama; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Username/Email</td>
+                        <td>: <?= $key->email; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Terdaftar Pada</td>
+                        <td>: <?= date('d-m-Y h:i:s A', strtotime($key->terdaftar_pada)); ?></td>
+                    </tr>
+                    <tr>
+                        <td>Masa Aktif</td>
+                        <td>: <?php if ($sisahari < 0) { echo "0 Hari"; } else { echo number_format($sisahari)." Hari"; }?></td>
+                    </tr>
+                    <tr>
+                        <td>Update Password</td>
+                        <td>
+                            <input id="password" name="password" type="password" class="password form-control required" placeholder="Password"  class="form-control" autofocus>
+                            <input type="checkbox" class="form-checkbox"> Show password
                         </td>
                     </tr>
                 </table>

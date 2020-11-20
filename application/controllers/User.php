@@ -137,11 +137,11 @@ class User extends CI_Controller {
 				{
 					activity_log("Aktivasi Blokir", $nama, $level_lama, $lev->tipe, $tgl_akhir);				
 					$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Data Berhasil Disimpan');
-					redirect('user/user_baru');
+					redirect('user/data_user');
 				}
 			} else {
 				$this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Data Gagal Disimpan');
-				redirect('user/user_baru');
+				redirect('user/data_user');
 			}	
 		}
 	}
@@ -222,5 +222,27 @@ class User extends CI_Controller {
 			$this->session->set_flashdata('danger', '<i class="icon fa fa-warning"></i>  Maaf.. User Masih Aktif <strong>Silahkan Blokir Terlebih Dahulu</strong>');
 			redirect('user/data_user');
         }
+	}	
+	public function update_password()
+	{
+		$this->cek_login();
+		$id = $this->input->post('id', TRUE);
+		if ($this->input->post('submit', TRUE) == 'Submit') 
+        {			
+			$this->form_validation->set_rules('password', 'Password', "required");
+			if ($this->form_validation->run() == TRUE)
+            {
+				$pass = $this->input->post('password', TRUE);
+				$data = array(
+					'password' => md5($pass)
+				);
+				$this->admin->update('tbl_user', $data, ['id' => $id]);
+				$this->session->set_flashdata('success', '<i class="icon fa fa-smile-o"></i>  Password Berhasil Dirubah');
+				redirect('user/data_user');
+			} else {
+				$this->session->set_flashdata('danger', '<i class="icon fa fa-frown-o"></i>  Data Gagal Disimpan');
+				redirect('user/data_user');
+			}	
+		} 
 	}
 }

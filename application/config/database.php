@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => 'localhost:3306',
 	'username' => 'onek5663_onematel',
 	'password' => 'Tujuh0511',
 	'database' => 'onek5663_onematel',

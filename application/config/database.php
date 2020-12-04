@@ -73,9 +73,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-$db['default'] = array(
+$db[''] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost:3306',
+	'hostname' => 'localhost',
 	'username' => 'onek5663_onematel',
 	'password' => 'Tujuh0511',
 	'database' => 'onek5663_onematel',
@@ -95,7 +95,7 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
-$db[''] = array(
+$db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => '36.91.140.211:3377',
 	'username' => 'root',
